@@ -1,0 +1,47 @@
+﻿@using Reservas.Models.ViewModel
+@model UsrViewModel
+
+
+<h1>Crear cerveza</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly"class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreUsr" class="control-label"></label>
+                <input asp-for="NombreUsr" class="form-control"/>
+                <span asp-validation-for="NombreUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApellidoUsr" class="control-label"></label>
+                <input asp-for="ApellidoUsr" class="form-control"/>
+                <span asp-validation-for="ApellidoUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailUsr" class="control-label"></label>
+                <input asp-for="EmailUsr" class="form-control" type="email"/>
+                <span asp-validation-for="EmailUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FonoUsr" class="control-label"></label>
+                <input asp-for="FonoUsr" class="form-control"/>
+                <span asp-validation-for="FonoUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RolUsr" class="control-label"></label>
+                <select asp-for="RolUsr" class="form-control" asp-items="ViewBag.Roles"></select>
+                <span asp-validation-for="RolUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                    <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

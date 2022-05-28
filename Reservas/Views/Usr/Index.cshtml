@@ -1,0 +1,52 @@
+﻿@model List<TbUsr>
+
+    <h1>Usuarios</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Crear</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Apellido
+                </th>
+                <th>
+                    Correo
+                </th>
+                <th>
+                    Fono
+                </th>
+                <th>
+                    Rol
+                </th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tbusr in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m=>tbusr.NombreUsr)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>tbusr.ApellidoUsr)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>tbusr.EmailUsr)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>tbusr.FonoUsr)
+                </td>
+                <td>
+                    @Html.DisplayFor(m=>tbusr.RolUsrNavigation.NombreRol)
+                </td>
+                <td></td>
+            </tr>
+        }
+        </tbody>
+    </table>

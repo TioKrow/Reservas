@@ -1,0 +1,20 @@
+﻿@model List<TbRol>
+
+    <h1>Roles</h1>
+    <table class="table"> 
+        <thead>
+            <tr>
+                <th>IdRol</th>
+                <th>Rol</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tbRol in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m=>tbRol.IdRol)</td>
+                <td>@Html.DisplayFor(m=>tbRol.NombreRol)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
