@@ -42,6 +42,8 @@ namespace Reservas.Controllers
                     EmailUsr=model.EmailUsr,
                     FonoUsr=model.FonoUsr,
                     RolUsr=model.RolUsr,
+                    UsernameUsr=model.UsernameUsr,
+                    PasswordUsr=model.PasswordUsr,
                 };
                 _context.Add(usr);
                 await _context.SaveChangesAsync();
@@ -51,5 +53,15 @@ namespace Reservas.Controllers
 
             return View();
         }
+
+        public IActionResult Modificar()
+        {
+            return View();
+        }
+        public IActionResult Eliminar()
+        {
+            return View();
+        }
+
     }
 }

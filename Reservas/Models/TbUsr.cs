@@ -11,6 +11,8 @@ namespace Reservas.Models
         public string EmailUsr { get; set; } = null!;
         public int FonoUsr { get; set; }
         public int RolUsr { get; set; }
+        public string UsernameUsr { get; set; } = null!;
+        public string PasswordUsr { get; set; } = null!;
 
         public virtual TbRol RolUsrNavigation { get; set; } = null!;
     }

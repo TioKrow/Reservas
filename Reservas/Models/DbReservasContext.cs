@@ -16,6 +16,9 @@ namespace Reservas.Models
         {
         }
 
+        public virtual DbSet<TbLab> TbLabs { get; set; } = null!;
+        public virtual DbSet<TbModulo> TbModulos { get; set; } = null!;
+        public virtual DbSet<TbReserva> TbReservas { get; set; } = null!;
         public virtual DbSet<TbRol> TbRols { get; set; } = null!;
         public virtual DbSet<TbUsr> TbUsrs { get; set; } = null!;
 
@@ -30,6 +33,45 @@ namespace Reservas.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<TbLab>(entity =>
+            {
+                entity.HasKey(e => e.IdLab);
+
+                entity.ToTable("TB_Lab");
+
+                entity.Property(e => e.NombreLab)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<TbModulo>(entity =>
+            {
+                entity.HasKey(e => e.IdModulo);
+
+                entity.ToTable("TB_Modulo");
+            });
+
+            modelBuilder.Entity<TbReserva>(entity =>
+            {
+                entity.HasKey(e => e.IdReserva);
+
+                entity.ToTable("TB_Reservas");
+
+                entity.Property(e => e.FechaReserva).HasColumnType("date");
+
+                entity.HasOne(d => d.IdLabNavigation)
+                    .WithMany(p => p.TbReservas)
+                    .HasForeignKey(d => d.IdLab)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TB_Reservas_TB_Lab");
+
+                entity.HasOne(d => d.IdModuloNavigation)
+                    .WithMany(p => p.TbReservas)
+                    .HasForeignKey(d => d.IdModulo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TB_Reservas_TB_Modulo");
+            });
+
             modelBuilder.Entity<TbRol>(entity =>
             {
                 entity.HasKey(e => e.IdRol);
@@ -56,6 +98,14 @@ namespace Reservas.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.NombreUsr)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PasswordUsr)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UsernameUsr)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 

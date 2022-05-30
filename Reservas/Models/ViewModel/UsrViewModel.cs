@@ -19,5 +19,12 @@ namespace Reservas.Models.ViewModel
         [Required]
         [Display(Name = "Rol")]
         public int RolUsr { get; set; }
+        [Required]
+        [Display(Name = "Username")]
+        public string UsernameUsr { get; set; }
+        [Required]
+        [Display(Name = "Password")]
+        [DataType(DataType.Password)]
+        public string PasswordUsr { get; set; }
     }
 }
