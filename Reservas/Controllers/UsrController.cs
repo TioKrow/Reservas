@@ -54,13 +54,54 @@ namespace Reservas.Controllers
             return View();
         }
 
-        public IActionResult Modificar()
+        public async Task<IActionResult> Modificar(int IdUsr)
         {
-            return View();
+            EditarUsrViewModel model = new EditarUsrViewModel();
+            using (var db = new DbReservasContext())
+            {
+                var oUser = db.TbUsrs.Find(IdUsr);
+                model.NombreUsr = oUser.NombreUsr;
+                model.ApellidoUsr = oUser.ApellidoUsr;
+                model.EmailUsr = oUser.EmailUsr;
+                model.FonoUsr = oUser.FonoUsr;
+                model.RolUsr = oUser.RolUsr;
+                model.UsernameUsr = oUser.UsernameUsr;
+                model.PasswordUsr = oUser.PasswordUsr;
+                model.IdUsr = oUser.IdUsr;
+            }
+            ViewData["Roles"] = new SelectList(_context.TbRols, "IdRol", "NombreRol", model.RolUsr);
+
+            return View(model);
         }
-        public IActionResult Eliminar()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Modificar(EditarUsrViewModel model)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (var db = new DbReservasContext())
+            {
+                var oUser = db.TbUsrs.Find(model.IdUsr);
+                oUser.NombreUsr = model.NombreUsr;
+                oUser.ApellidoUsr = model.ApellidoUsr;
+                oUser.EmailUsr = model.EmailUsr;
+                oUser.FonoUsr = model.FonoUsr;
+                oUser.RolUsr = model.RolUsr;
+                oUser.UsernameUsr = model.UsernameUsr;
+                if (model.PasswordUsr != null && model.PasswordUsr.Trim() !="")
+                {
+                    oUser.PasswordUsr = model.PasswordUsr;
+                }
+                db.Entry(oUser).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                
+            }
+
+            return RedirectToAction("Index","Usr");
         }
 
     }

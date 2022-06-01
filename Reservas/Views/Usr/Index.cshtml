@@ -1,58 +1,62 @@
 ﻿@model List<TbUsr>
-
-    <h1>Usuarios</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Nombre
-                </th>
-                <th>
-                    Apellido
-                </th>
-                <th>
-                    Correo
-                </th>
-                <th>
-                    Fono
-                </th>
-                <th>
-                    Rol
-                </th>
-                <th>
-                    Username
-                </th>
-                <th><a asp-action="Create" class="btn btn-primary">Crear</a></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var tbusr in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m=>tbusr.NombreUsr)
-                </td>
-                <td>
-                    @Html.DisplayFor(m=>tbusr.ApellidoUsr)
-                </td>
-                <td>
-                    @Html.DisplayFor(m=>tbusr.EmailUsr)
-                </td>
-                <td>
-                    @Html.DisplayFor(m=>tbusr.FonoUsr)
-                </td>
-                <td>
-                    @Html.DisplayFor(m=>tbusr.RolUsrNavigation.NombreRol)
-                </td>
-                <td>
-                    @Html.DisplayFor(m=>tbusr.UsernameUsr)
-                </td>
-                <td>
-                    <a asp-action="Modificar" class="btn btn-primary">Editar</a>
-                    <a asp-action="Eliminar" class="btn btn-primary">Eliminar</a>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+<div class="card">
+    <div class="card-header">
+    <h5>Tabla de usuarios</h5>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Apellido
+                    </th>
+                    <th>
+                        Correo
+                    </th>
+                    <th>
+                        Fono
+                    </th>
+                    <th>
+                        Rol
+                    </th>
+                    <th>
+                        Username
+                    </th>
+                    <th><a asp-action="Create" class="btn btn-success btn-sm" asp-route-IdUsr="0">Crear</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tbusr in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m=>tbusr.NombreUsr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>tbusr.ApellidoUsr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>tbusr.EmailUsr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>tbusr.FonoUsr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>tbusr.RolUsrNavigation.NombreRol)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m=>tbusr.UsernameUsr)
+                    </td>
+                    <td>
+                        <a asp-action="Modificar" class="btn btn-primary btn-sm"asp-route-IdUsr="@tbusr.IdUsr">Editar</a>
+                        <a asp-action="Eliminar" class="btn btn-danger btn-sm"asp-route-IdUsr="@tbusr.IdUsr">Eliminar</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

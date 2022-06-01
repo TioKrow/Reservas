@@ -31,20 +31,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="RolUsr" class="control-label"></label>
-                <select asp-for="RolUsr" class="form-control" asp-items="ViewBag.Roles"></select>
+                <select asp-for="RolUsr" class="form-control" asp-items="ViewBag.Roles"><option selected disabled>--Seleccionar--</option></select>
                 <span asp-validation-for="RolUsr" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UsernameUsr" class="control-label"></label>
-                <input asp-for="UsernameUsr" class="form-control" asp-items="ViewBag.Roles"></input>
+                <input asp-for="UsernameUsr" class="form-control"></input>
                 <span asp-validation-for="UsernameUsr" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PasswordUsr" class="control-label"></label>
-                <input asp-for="PasswordUsr" class="form-control" type="password" asp-items="ViewBag.Roles"></input>
+                <input asp-for="PasswordUsr" class="form-control" type="password"></input>
                 <span asp-validation-for="PasswordUsr" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="padding-top:10px">
                     <input type="submit" value="Crear" class="btn btn-primary" />
             </div>
         </form>

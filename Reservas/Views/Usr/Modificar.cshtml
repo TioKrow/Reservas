@@ -1,1 +1,57 @@
-﻿<h1>Modificar usuario</h1>
+﻿@model Reservas.Models.ViewModel.EditarUsrViewModel
+
+
+<h1>Crear Usuario</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Modificar">
+            @Html.HiddenFor(d=>d.IdUsr)
+            <div asp-validation-summary="ModelOnly"class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreUsr" class="control-label"></label>
+                <input asp-for="NombreUsr" class="form-control"/>
+                <span asp-validation-for="NombreUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApellidoUsr" class="control-label"></label>
+                <input asp-for="ApellidoUsr" class="form-control"/>
+                <span asp-validation-for="ApellidoUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailUsr" class="control-label"></label>
+                <input asp-for="EmailUsr" class="form-control" type="email"/>
+                <span asp-validation-for="EmailUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FonoUsr" class="control-label"></label>
+                <input asp-for="FonoUsr" class="form-control"/>
+                <span asp-validation-for="FonoUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RolUsr" class="control-label"></label>
+                <select asp-for="RolUsr" class="form-control" asp-items="ViewBag.Roles"></select>
+                <span asp-validation-for="RolUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UsernameUsr" class="control-label"></label>
+                <input asp-for="UsernameUsr" class="form-control"></input>
+                <span asp-validation-for="UsernameUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PasswordUsr" class="control-label"></label>
+                <input asp-for="PasswordUsr" class="form-control" type="password"></input>
+                <span asp-validation-for="PasswordUsr" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="padding-top:10px">
+                    <input type="submit" value="Modificar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
