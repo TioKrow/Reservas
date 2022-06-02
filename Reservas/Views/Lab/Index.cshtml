@@ -1,0 +1,30 @@
+﻿@model List<TbLab>
+<div class="card">
+    <div class="card-header">
+    <h1>Laboratorios</h1>
+    </div>
+    <div class="card-body">
+    <table class="table table-striped"> 
+        <thead>
+            <tr>
+                <th>IdLab</th>
+                <th>Laboratorio</th>
+                <th><a asp-action="AgregarLab" class="btn btn-success btn-sm" asp-route-IdLab="0">Agregar</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tblab in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m=>tblab.IdLab)</td>
+                <td>@Html.DisplayFor(m=>tblab.NombreLab)</td>
+                <td>
+                    <a asp-action="ModificarLab" class="btn btn-primary btn-sm"asp-route-IdLab="@tblab.IdLab">Editar</a>
+                    <a asp-action="EliminarLab" class="btn btn-danger btn-sm"asp-route-IdLab="@tblab.IdLab">Eliminar</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+﻿@using Reservas.Models.ViewModel
+@model LabViewModel
+
+
+<h1>Agregar Laboratorio</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AgregarLab">
+            <div asp-validation-summary="ModelOnly"class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="NombreLab" class="control-label"></label>
+                <input asp-for="NombreLab" class="form-control"/>
+                <span asp-validation-for="NombreLab" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="padding-top:10px">
+                    <input type="submit" value="Agregar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
