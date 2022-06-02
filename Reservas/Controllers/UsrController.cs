@@ -103,6 +103,18 @@ namespace Reservas.Controllers
 
             return RedirectToAction("Index","Usr");
         }
+        public async Task<IActionResult> Eliminar(int IdUsr)
+        {
+            EditarUsrViewModel model = new EditarUsrViewModel();
+            using (var db = new DbReservasContext())
+            {
+                var oUser = db.TbUsrs.Find(IdUsr);
+                _context.TbUsrs.Remove(oUser);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Usr");
+            }
+            return RedirectToAction("Index", "Usr");
+        }
 
     }
 }
