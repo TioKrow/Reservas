@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Reservas.Models;
 
+using Microsoft.AspNetCore.Authorization;
 namespace Reservas.Controllers
 {
+    [Authorize(Roles = "1")]
     public class RolController : Controller
     {
         private readonly DbReservasContext _context;

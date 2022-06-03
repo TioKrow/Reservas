@@ -4,8 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Reservas.Models;
 using Reservas.Models.ViewModel;
 
+using Microsoft.AspNetCore.Authorization;
 namespace Reservas.Controllers
 {
+    [Authorize(Roles = "1") ]
     public class UsrController : Controller
     {
         private readonly DbReservasContext _context;

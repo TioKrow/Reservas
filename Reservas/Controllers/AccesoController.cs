@@ -21,8 +21,38 @@ namespace Reservas.Controllers
         {
             return View();
         }
-
         [HttpPost]
+        public async Task<IActionResult> Index(UsrViewModel _usuario)
+        {
+            using (var context = _context)
+            {
+                var lst = from d in _context.TbUsrs
+                          where d.UsernameUsr == _usuario.UsernameUsr && 
+                                d.PasswordUsr == _usuario.PasswordUsr
+                          select d;
+                if (lst.Count() > 0)
+                {
+                    var claims = new List<Claim> {
+                     new Claim(ClaimTypes.Name,_usuario.UsernameUsr),
+                     new Claim(ClaimTypes.Role,Convert.ToString(_usuario.RolUsr))
+                    };
+
+                    claims.Add(new Claim(ClaimTypes.Role, Convert.ToString(_usuario.RolUsr)));
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+
+
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            return View();
+        }
+
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Index(string UsernameUsr, string PasswordUsr)
         {
@@ -37,9 +67,11 @@ namespace Reservas.Controllers
                 }
                 return View();
             }
-        }
-        public IActionResult Salir()
+        }*/
+        public async Task<IActionResult> Salir()
         {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
             return RedirectToAction("Index", "Acceso");
         }
 

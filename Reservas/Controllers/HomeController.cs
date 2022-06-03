@@ -2,8 +2,10 @@
 using Reservas.Models;
 using System.Diagnostics;
 
+using Microsoft.AspNetCore.Authorization;
 namespace Reservas.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
