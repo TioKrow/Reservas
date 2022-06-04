@@ -20,7 +20,7 @@ namespace Reservas.Controllers
         public async Task<IActionResult> Index()
         {
             var usrs = _context.TbUsrs.Include(b => b.RolUsrNavigation);
-
+            
             return View(await usrs.ToListAsync());
         }
 

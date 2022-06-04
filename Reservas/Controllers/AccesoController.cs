@@ -5,6 +5,7 @@ using Reservas.Models.ViewModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace Reservas.Controllers
 {
@@ -24,17 +25,21 @@ namespace Reservas.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(UsrViewModel _usuario)
         {
+
             using (var context = _context)
             {
                 var lst = from d in _context.TbUsrs
-                          where d.UsernameUsr == _usuario.UsernameUsr && 
-                                d.PasswordUsr == _usuario.PasswordUsr
+                          where d.UsernameUsr == _usuario.UsernameUsr &&
+                                d.PasswordUsr == _usuario.PasswordUsr 
+                                
                           select d;
                 if (lst.Count() > 0)
                 {
+                    TbUsr oUser = lst.First();
+                    
                     var claims = new List<Claim> {
-                     new Claim(ClaimTypes.Name,_usuario.UsernameUsr),
-                     new Claim(ClaimTypes.Role,Convert.ToString(_usuario.RolUsr))
+                     new Claim(ClaimTypes.Name,oUser.UsernameUsr),
+                     new Claim(ClaimTypes.Role,Convert.ToString(oUser.RolUsr))
                     };
 
                     claims.Add(new Claim(ClaimTypes.Role, Convert.ToString(_usuario.RolUsr)));
@@ -51,23 +56,7 @@ namespace Reservas.Controllers
 
             return View();
         }
-
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Index(string UsernameUsr, string PasswordUsr)
-        {
-            using (var context = _context)
-            {
-                var lst = from d in _context.TbUsrs
-                          where d.UsernameUsr == UsernameUsr && d.PasswordUsr == PasswordUsr
-                          select d;
-                if (lst.Count() > 0)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                return View();
-            }
-        }*/
+        
         public async Task<IActionResult> Salir()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
