@@ -39,6 +39,10 @@ namespace Reservas.Models
 
                 entity.ToTable("TB_Lab");
 
+                entity.Property(e => e.DescripcionLab)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.NombreLab)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -57,7 +61,17 @@ namespace Reservas.Models
 
                 entity.ToTable("TB_Reservas");
 
+                entity.Property(e => e.Curso)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Docente)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.FechaReserva).HasColumnType("date");
+
+                entity.Property(e => e.FinReserva).HasColumnType("date");
 
                 entity.HasOne(d => d.IdLabNavigation)
                     .WithMany(p => p.TbReservas)
@@ -70,6 +84,12 @@ namespace Reservas.Models
                     .HasForeignKey(d => d.IdModulo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TB_Reservas_TB_Modulo");
+
+                entity.HasOne(d => d.IdUsrNavigation)
+                    .WithMany(p => p.TbReservas)
+                    .HasForeignKey(d => d.IdUsr)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TB_Reservas_TB_Usr");
             });
 
             modelBuilder.Entity<TbRol>(entity =>

@@ -1,0 +1,32 @@
+﻿@using Reservas.Models.ViewModel
+@model ModuloViewModel
+
+
+<h1>Agregar Modulos</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AgregarMod">
+            <div asp-validation-summary="ModelOnly"class="text-danger"></div>
+             <div class="form-group">
+                <label asp-for="InicioMod" class="control-label"></label>
+                <input asp-for="InicioMod" class="form-control" type="time"/>
+                <span asp-validation-for="InicioMod" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="FinMod" class="control-label"></label>
+                <input asp-for="FinMod" class="form-control" type="time"/>
+                <span asp-validation-for="FinMod" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="padding-top:10px">
+                    <input type="submit" value="Agregar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

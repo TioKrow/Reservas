@@ -24,7 +24,7 @@ namespace Reservas.Controllers
 
         public IActionResult AgregarLab()
         {
-            ViewData["Laboratorios"] = new SelectList(_context.TbLabs, "IdLab", "NombreLab");
+            ViewData["Laboratorios"] = new SelectList(_context.TbLabs, "IdLab", "NombreLab", "DescripcionLab", "CapacidadLab");
 
             return View();
         }
@@ -37,6 +37,9 @@ namespace Reservas.Controllers
                 var lab = new TbLab()
                 {
                     NombreLab = model.NombreLab,
+                    DescripcionLab = model.DescripcionLab,
+                    CapacidadLab = model.CapacidadLab,
+
                 };
                 _context.Add(lab);
                 await _context.SaveChangesAsync();
@@ -54,6 +57,8 @@ namespace Reservas.Controllers
                 var oLab = db.TbLabs.Find(IdLab);
                 model.NombreLab = oLab.NombreLab;
                 model.IdLab = oLab.IdLab;
+                model.DescripcionLab = oLab.DescripcionLab;
+                model.CapacidadLab = oLab.CapacidadLab;
             }
             ViewData["Laboratorios"] = new SelectList(_context.TbLabs, "IdLab", "NombreLab");
             return View(model);
@@ -71,6 +76,8 @@ namespace Reservas.Controllers
             {
                 var oLab = db.TbLabs.Find(model.IdLab);
                 oLab.NombreLab = model.NombreLab;
+                oLab.DescripcionLab = model.DescripcionLab;
+                oLab.CapacidadLab= model.CapacidadLab;
                 db.Entry(oLab).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }

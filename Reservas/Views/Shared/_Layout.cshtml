@@ -26,6 +26,9 @@
                         @if (User.IsInRole("1"))
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Modulo" asp-action="Index">Modulos</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Lab" asp-action="Index">Laboratorios</a>
                             </li>
                             <li class="nav-item">
@@ -34,6 +37,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usr" asp-action="Index">Usuarios</a>
                             </li>
+
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="Salir">Cerrar Sesion</a>

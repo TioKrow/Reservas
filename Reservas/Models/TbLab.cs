@@ -12,6 +12,8 @@ namespace Reservas.Models
 
         public int IdLab { get; set; }
         public string NombreLab { get; set; } = null!;
+        public string? DescripcionLab { get; set; }
+        public int? CapacidadLab { get; set; }
 
         public virtual ICollection<TbReserva> TbReservas { get; set; }
     }

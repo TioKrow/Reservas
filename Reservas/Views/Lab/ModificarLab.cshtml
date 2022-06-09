@@ -15,6 +15,16 @@
                 <input asp-for="NombreLab" class="form-control"/>
                 <span asp-validation-for="NombreLab" class="text-danger"></span>
             </div>
+             <div class="form-group">
+                <label asp-for="DescripcionLab" class="control-label"></label>
+                <input asp-for="DescripcionLab" class="form-control"/>
+                <span asp-validation-for="DescripcionLab" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="CapacidadLab" class="control-label"></label>
+                <input asp-for="CapacidadLab" class="form-control"type="number"/>
+                <span asp-validation-for="CapacidadLab" class="text-danger"></span>
+            </div>
             <div class="form-group" style="padding-top:10px">
                     <input type="submit" value="Modificar" class="btn btn-primary" />
             </div>

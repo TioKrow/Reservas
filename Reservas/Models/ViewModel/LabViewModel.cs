@@ -8,6 +8,8 @@ namespace Reservas.Models.ViewModel
         [Required]
         [Display(Name = "Nombre Lab")]
         public string NombreLab { get; set; } = null!;
+        public string? DescripcionLab { get; set; }
+        public int? CapacidadLab { get; set; }
     }
     public class EditarLabViewModel
     {
@@ -15,5 +17,7 @@ namespace Reservas.Models.ViewModel
         [Required]
         [Display(Name = "Nombre Lab")]
         public string NombreLab { get; set; } = null!;
+        public string? DescripcionLab { get; set; }
+        public int? CapacidadLab { get; set; }
     }
 }
