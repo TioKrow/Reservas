@@ -1,0 +1,66 @@
+﻿@model List<TbReserva>
+@{
+    string[,] semana = new String[13,7];
+    DateTime fecha = DateTime.Now, primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
+    , ultimodia=fecha.AddDays(6 - (byte)fecha.DayOfWeek);
+    using (var context = _context)
+            {
+                var lst = from d in _context.TbUsrs
+                          where d.UsernameUsr == _usuario.UsernameUsr &&
+                                d.PasswordUsr == _usuario.PasswordUsr 
+                                
+                          select d;
+            }
+}
+
+@{
+    string[] mod = { "1", "2", "3", "4", "5", "6", "7", "8" };
+    string[] Lunes = { "1L", "2L", "3L", "4L", "5L", "6L", "7L", "8L" };
+    string[] Martes = { "1", null, "3", "4", null, "6", "7", "8" };
+    string[] Miercoles = { "1", "2", "3", "4", "5", "6", "7", "8" };
+    string[] Jueves = { "1", "2", "3", "4", "5", "6", "7", "8" };
+    string[] Viernes = { "v", "v", "v", "v", "v", "v", "v", "v" };
+    string[] Sabado = { "1", "2", "3", "4", "5", "6", "7", "8" };
+}
+<div class="card">
+    <div class="card-header">
+    <h4>Reservas</h4>
+    </div>
+    <div class="card-body" style="padding:25px">
+<table class="table table-bordered border-black">
+  <thead>
+    <tr>
+        
+      <th scope="col">Modulo</th>
+      <th scope="col">Lunes</th>
+      <th scope="col">Martes</th>
+      <th scope="col">Miercoles</th>
+      <th scope="col">Jueves</th>
+      <th scope="col">Viernes</th>
+      <th scope="col">Sabado</th>
+    </tr>
+  </thead>
+  <tbody>
+        @for (int i = 0; i < mod.Length; i++)
+            {
+                <tr>
+                <th scope="row">@mod[i]</th>
+                <td>@Lunes[i]</td>
+                @if (Martes[i] == null)
+                {
+                    <td><button type="submit">Reservar</button></td>
+                }
+                else
+                {
+                        <td>@Martes[i]</td>
+                }
+                <td>@Miercoles[i]</td>
+                <td>@Jueves[i]</td>
+                <td>@Viernes[i]<br> a</td>
+                <td>@Sabado[i] <button type="submit">Reservar</button></td>
+                </tr>
+            }
+  </tbody>
+</table>
+   </div>
+</div>
