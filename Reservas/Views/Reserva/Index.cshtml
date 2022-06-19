@@ -1,54 +1,60 @@
 ﻿@model List<TbReserva>
 @{
-    string[,] semana = new String[13,7];
+    string[,,] semana = new String[13,7,2];
     DateTime fecha = DateTime.Now, primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
     , ultimodia=fecha.AddDays(6 - (byte)fecha.DayOfWeek);
-    string pepe;
-    for (int i = 0; i < 13; i++)
+    string pepe,pepe2,pepe3;
+    for (int i = 0; i < 12; i++)
     {
-        for (int j = 0; j < 7; j++)
+        for (int j = 0; j < 6; j++)
         {
-            semana[i, j] = "";
+            semana[i, j,1] = "";
+            semana[i, j,0] = "";
         }
     }
 }
 
 <div class="card">
-    <div class="card-header">
-    <h4>Reservas</h4>
-    </div>
-    <div class="card-body" style="padding:25px">
-<table class="table table-bordered border-black">
-  <thead>
-    <tr>
-      <th scope="col">Modulo</th>
-      <th scope="col">Lunes</th>
-      <th scope="col">Martes</th>
-      <th scope="col">Miercoles</th>
-      <th scope="col">Jueves</th>
-      <th scope="col">Viernes</th>
-      <th scope="col">Sabado</th>
-    </tr>
-  </thead>
-  <tbody>
-      @foreach (var item in Model)
-        {
-            semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek] = item.Curso + item.Docente;
-
-        }
-        @for (int i = 0; i < 13; i++)
-            { 
-             <tr>
-                @for(int j=0;j<7; j++)
-                        {
-                            <th scope="row">modulo]</th>
-                            pepe = semana[i, j];
-                            <td>@Html.DisplayFor(m=>pepe)</td>
-                }   
-              </tr>
-            }
-        }
-  </tbody>
-</table>
-   </div>
+        <div class="card-header">
+            <h4>Reservas</h4>
+        </div>
+        <div class="card-body" style="padding:25px">
+            <table class="table table-bordered border-black">
+                <thead>
+                    <tr style="text-align:center">
+                        <th>Modulo</th>
+                        <th>Lunes</th>
+                        <th>Martes</th>
+                        <th>Miercoles</th>
+                        <th>Jueves</th>
+                        <th>Viernes</th>
+                        <th>Sabado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        semana[item.IdModulo, 0,0] = Convert.ToString(item.IdModuloNavigation.InicioMod);
+                        semana[item.IdModulo, 0,1] = Convert.ToString(item.IdModuloNavigation.FinMod);
+                        semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,0] = item.Curso;
+                        semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,1] = item.Docente;
+            
+                    }
+                    @for (int i = 1; i < 13; i++)
+                    { 
+                        pepe = semana[i, 0,0];
+                        pepe2 = semana[i, 0,1];
+                        <tr style="text-align:center">
+                           <th >@Html.DisplayFor(m=>pepe)<br>@Html.DisplayFor(m=>pepe2)</th>
+                           @for(int j=1;j<=6; j++)
+                           {
+                               pepe = semana[i, j,0];
+                               pepe2 = semana[i, j,1];
+                               <td>@Html.DisplayFor(m=>pepe)<br />@Html.DisplayFor(m=>pepe2)</td>
+                           }   
+                         </tr>
+                    }
+                </tbody>
+            </table>
+       </div>
 </div>
