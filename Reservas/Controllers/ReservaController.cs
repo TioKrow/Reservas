@@ -19,20 +19,19 @@ namespace Reservas.Controllers
             DateTime fecha = DateTime.Now, primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
             , ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
 
-            var res = _context.TbReservas.Include(b => b.IdUsrNavigation)
-                                         .Include(b => b.IdModuloNavigation)
-                                         .Include(b => b.IdLabNavigation);
-            using (var context = _context)
-            {
-                var lst = from d in res
-                          where d.FechaReserva >= primerdia &&
-                          d.FechaReserva <= ultimodia &&
-                          d.IdLab == lab
-                          select d;
+            List<TbModulo> modulos = _context.TbModulos.ToList();
+            ViewBag.modulos = modulos;
 
-                return View(await lst.ToListAsync());
-            }
+            ViewBag.Laboratorios = new SelectList(_context.TbLabs, "IdLab", "NombreLab");
+            
+            List<TbReserva> reservas = (from d in _context.TbReservas
+                                             where d.FechaReserva >= primerdia &&
+                                                       d.FechaReserva <= ultimodia &&
+                                                       d.IdLab == lab
+                                             select d).ToList();
+            ViewBag.reservas = reservas;
 
+            return View();
         }
 
         public IActionResult Create()

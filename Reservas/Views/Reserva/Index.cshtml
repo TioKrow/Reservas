@@ -1,10 +1,10 @@
 ﻿@model List<TbReserva>
 @{
-    string[,,] semana = new String[13,7,2];
+    string[,,] semana = new String[14,8,2];
     DateTime fecha = DateTime.Now, primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
     , ultimodia=fecha.AddDays(6 - (byte)fecha.DayOfWeek);
     string pepe,pepe2,pepe3;
-    for (int i = 0; i < 12; i++)
+    for (int i = 0; i <= 13; i++)
     {
         for (int j = 0; j < 6; j++)
         {
@@ -16,7 +16,29 @@
 
 <div class="card">
         <div class="card-header">
-            <h4>Reservas</h4>
+           <h4 style="text-align:center">Reservas</h4>
+            <div class="container">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button type="submit" style="background:none;border:none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                </svg>
+                    </button>
+                    @primerdia.ToShortDateString() - @ultimodia.ToShortDateString()
+                    <button type="submit" style="background:none;border:none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                </svg>
+                    </button>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <select class="form-control" asp-items="ViewBag.Laboratorios"><option selected disabled>--Seleccionar--</option></select>
+                        <span class="text-danger"></span>
+                    </div>
+                  </div>
+                </div>
+            </div>
         </div>
         <div class="card-body" style="padding:25px">
             <table class="table table-bordered border-black">
@@ -32,15 +54,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in (List<TbModulo>)ViewBag.Modulos)
                     {
-                        semana[item.IdModulo, 0,0] = Convert.ToString(item.IdModuloNavigation.InicioMod);
-                        semana[item.IdModulo, 0,1] = Convert.ToString(item.IdModuloNavigation.FinMod);
+                        semana[item.IdModulo, 0,0] = Convert.ToString(item.InicioMod);
+                        semana[item.IdModulo, 0,1] = Convert.ToString(item.FinMod);
+                    }
+
+                    @foreach (var item in (List<TbReserva>)ViewBag.reservas)
+                    {
                         semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,0] = item.Curso;
                         semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,1] = item.Docente;
-            
                     }
-                    @for (int i = 1; i < 13; i++)
+                     @for (int i = 1; i <= 13; i++)
                     { 
                         pepe = semana[i, 0,0];
                         pepe2 = semana[i, 0,1];
@@ -53,7 +78,7 @@
                                <td>@Html.DisplayFor(m=>pepe)<br />@Html.DisplayFor(m=>pepe2)</td>
                            }   
                          </tr>
-                    }
+                    }   
                 </tbody>
             </table>
        </div>
