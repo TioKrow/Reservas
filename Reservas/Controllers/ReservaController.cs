@@ -13,22 +13,20 @@ namespace Reservas.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(int dia, int mes, int año, int lab, string fec)
+        public async Task<IActionResult> Index(int dia, int mes, int año, int lab, int x)
         {
-            //int lab = 1;
-            //DateTime fecha = DateTime.Now
-            //DateTime fecha = DateTime.Parse(fechaPaso);
-            DateTime fec2 = Convert.ToDateTime(fec);
-            //DateTime fecha = new DateTime(año, mes, dia);
-            DateTime primerdia = fec2.AddDays(-(byte)fec2.DayOfWeek + 1);
-            DateTime ultimodia = fec2.AddDays(6 - (byte)fec2.DayOfWeek);
+            DateTime fecha = new DateTime(año, mes, dia);
+            fecha=fecha.AddDays(x);
+            DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
+            DateTime ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
 
             ViewData["Lab"] = lab;
-            //ViewData["Fecha"] = fecha;
-            ViewData["fec2"] = fec2;
-            ViewData["dia"] = dia;
-            ViewData["mes"] = mes;
-            ViewData["año"] = año;
+            ViewData["fecha"] = fecha;
+            ViewData["dia"] = fecha.Day;
+            ViewData["mes"] = fecha.Month;
+            ViewData["año"] = fecha.Year;
+            ViewData["x"] = 0;
+            
             List<TbModulo> modulos = _context.TbModulos.ToList();
             ViewBag.modulos = modulos;
 
