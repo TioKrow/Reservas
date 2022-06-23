@@ -1,8 +1,15 @@
 ﻿@model List<TbReserva>
 @{
+    var lab = ViewData["Lab"];
+    DateTime fec2 = ViewBag.fec2;
+    int mes = fec2.Month, año = fec2.Year;
+    var dia = ViewData["dia"];
+    //int mes = ViewBag.mes;
+    //int año = ViewBag.año;
+    //int dia = ViewBag.dia;
     string[,,] semana = new String[14,8,2];
-    DateTime fecha = DateTime.Now, primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
-    , ultimodia=fecha.AddDays(6 - (byte)fecha.DayOfWeek);
+    DateTime primerdia=fec2.AddDays(-(byte)fec2.DayOfWeek + 1)
+    , ultimodia=fec2.AddDays(6 - (byte)fec2.DayOfWeek);
     string pepe,pepe2,pepe3;
     for (int i = 0; i <= 13; i++)
     {
@@ -13,32 +20,37 @@
         }
     }
 }
-
 <div class="card">
         <div class="card-header">
            <h4 style="text-align:center">Reservas</h4>
-            <div class="container">
-                <div class="row">
-                  <div class="col-sm-4">
-                    <button type="submit" style="background:none;border:none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
-                                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-                                </svg>
-                    </button>
-                    @primerdia.ToShortDateString() - @ultimodia.ToShortDateString()
-                    <button type="submit" style="background:none;border:none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
-                                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-                                </svg>
-                    </button>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                        <label class="control-label"></label>
-                        <select class="form-control" asp-items="ViewBag.Laboratorios"><option selected disabled>--Seleccionar--</option></select>
-                        <span class="text-danger"></span>
-                    </div>
-                  </div>
+           <form  asp-controller="Reserva" method="get" asp-action="Index">
+                <div class="container">
+                    <div class="row">
+                      <div class="col-sm-4" style="padding-top:5px; padding-left:25px">
+                        <button type="submit" style="background:none;border:none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                                    <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                                    </svg>
+                        </button>
+                        @primerdia.ToShortDateString() - @ultimodia.ToShortDateString()
+                        <button asp-route-fecha="@fec2.AddDays(7).ToShortDateString()" type="submit" style="background:none;border:none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                                    </svg>
+                        </button>
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="form-group" >
+                            <select class="form-control" asp-for="@lab" asp-items="ViewBag.Laboratorios"><option selected disabled>--Seleccionar--</option></select>
+                            <span class="text-danger"></span>
+                        </div>
+                      </div>
+                      <div class="col-sm-4" style="padding-left:100px">
+                        <div class="form-group">
+                            <input type="hidden" value="@fec2"/>
+                            <input type="submit" class="btn btn-primary" asp-route-fec2="@fec2" asp-route-lab="@lab"value="Buscar"/>
+                        </div>
+                      </div>
                 </div>
-            </div>
+            </form>
         </div>
         <div class="card-body" style="padding:25px">
             <table class="table table-bordered border-black">

@@ -1,5 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 <!DOCTYPE html>
+@{
+    DateTime fecha = DateTime.Now;
+    int dia = fecha.Day, mes = fecha.Month, año = fecha.Year;
+    string fechaPaso =  Convert.ToString(mes)+" "+ Convert.ToString(dia)+" "+Convert.ToString(año);
+}
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -37,8 +42,11 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usr" asp-action="Index">Usuarios</a>
                             </li>
-
                         }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Reserva" asp-action="Index" asp-route-lab="0"
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-fec="@fecha.ToShortDateString()">Reserva</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="Salir">Cerrar Sesion</a>
                         </li>
