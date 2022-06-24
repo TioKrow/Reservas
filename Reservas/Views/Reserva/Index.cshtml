@@ -60,6 +60,7 @@
                 <thead>
                     <tr style="text-align:center">
                         <th>Modulo</th>
+                        <th>Hora</th>
                         <th>Lunes</th>
                         <th>Martes</th>
                         <th>Miercoles</th>
@@ -69,12 +70,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                @if(lab!=0) {
                     @foreach (var item in (List<TbModulo>)ViewBag.Modulos)
                     {
-                        semana[item.IdModulo, 0,0] = Convert.ToString(item.InicioMod);
-                        semana[item.IdModulo, 0,1] = Convert.ToString(item.FinMod);
+                        semana[item.IdModulo, 0,0] = Convert.ToString(item.InicioMod).Substring(0,Convert.ToString(item.InicioMod).Length-3);
+                        semana[item.IdModulo, 0,1] = Convert.ToString(item.FinMod).Substring(0,Convert.ToString(item.InicioMod).Length-3);
                     }
-
                     @foreach (var item in (List<TbReserva>)ViewBag.reservas)
                     {
                         semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,0] = item.Curso;
@@ -84,29 +85,32 @@
                     { 
                         pmodulo = semana[i, 0,0];
                         pmodulo2 = semana[i, 0,1];
-                        
-                    <tr style="text-align:center">
-                           <th >@Html.DisplayFor(m=>pmodulo)<br>@Html.DisplayFor(m=>pmodulo2)</th>
-                           @for(int j=1;j<=6; j++)
-                           {
-                               pcurso = semana[i, j,0];
-                               pdocente = semana[i, j,1];
-                               semana[i, j, 2] = (i * 10 + j).ToString();
-                               xy = i * 10 + j;
-                            if (pdocente !=null && pcurso != null)
-                                {
-                                    <td><button type="button" class="btn btn-primary " style="background-color:none" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                        data-bs-whatever="@xy">@pcurso <br /> @pdocente</button></td>
-                                }
-                                else
-                                {
-                                    <td><button type="button" style="background-color:none" class="btn btn-primary background-color:none" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                        data-bs-whatever="@semana[i,j,2]">Disponible @xy</button></td>
-                                }
-                              
-                           }   
 
-                         </tr>
+                        <tr style="text-align:center">
+                        @if (semana[i, 0, 0] != "")
+                        {
+                            <th>@i</th>
+                        }
+                        <th >@Html.DisplayFor(m=>pmodulo)<br>@Html.DisplayFor(m=>pmodulo2)</th>
+                        @for(int j=1;j<=6; j++)
+                        {
+                            pcurso = semana[i, j,0];
+                            pdocente = semana[i, j,1];
+                            semana[i, j, 2] = (i * 10 + j).ToString();
+                            xy = i * 10 + j;
+                            if (pdocente !=null && pcurso != null)
+                            {
+                                <td><button name="xy" value="@xy" ID="@xy" type="button" class="btn btn-secundary" style="background-color:none " data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    data-bs-whatever="@xy">@pcurso <br /> @pdocente</button></td>
+                            }
+                            else
+                            {
+                                <td><button name="xy" value="@xy" id="@xy" type="button" style="background:none" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    data-bs-whatever="@semana[i,j,2]">Disponible @xy</button></td>
+                            }
+                           
+                        }   
+                        </tr>
                     }  
                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                      <div class="modal-dialog">
@@ -117,10 +121,11 @@
                          </div>
                          <div class="modal-body">
                            <form>
+
                              <div class="mb-3">
-                                 <p>Laboratorio:@lab<br /></p>
-                                 <p>Para el dia:@primerdia.AddDays((@xy%10-1)).ToShortDateString()<br /></p>
-                                 <p>Modulo:@(@xy/10)<br /></p>
+                               <p>Laboratorio: @lab<br /></p>
+                               <p>Para el dia: @primerdia.AddDays((@xy%10-1)).ToShortDateString()<br /></p>
+                               <p>Modulo: @(@xy/10)<br /></p>
                                <label for="recipient-name" class="col-form-label">Actividad:</label>
                                <input type="text" class="form-control" id="recipient-name">
                              </div>
@@ -136,7 +141,8 @@
                          </div>
                        </div>
                      </div>
-<                   /div> 
+                    </div> 
+                }
                 </tbody>
             </table>
        </div>
