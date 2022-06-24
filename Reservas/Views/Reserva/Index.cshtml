@@ -9,13 +9,14 @@
     string[,,] semana = new String[14,8,2];
     DateTime primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
     , ultimodia=fecha.AddDays(6 - (byte)fecha.DayOfWeek);
-    string pepe,pepe2,pepe3;
+    string pmodulo,pmodulo2;
+    string pcurso, pdocente;
     for (int i = 0; i <= 13; i++)
     {
         for (int j = 0; j < 6; j++)
         {
-            semana[i, j,1] = "";
-            semana[i, j,0] = "";
+            semana[i, j,1] = null;
+            semana[i, j,0] = null;
         }
     }
 }
@@ -81,18 +82,60 @@
                     }
                      @for (int i = 1; i <= 13; i++)
                     { 
-                        pepe = semana[i, 0,0];
-                        pepe2 = semana[i, 0,1];
+                        pmodulo = semana[i, 0,0];
+                        pmodulo2 = semana[i, 0,1];
                         <tr style="text-align:center">
-                           <th >@Html.DisplayFor(m=>pepe)<br>@Html.DisplayFor(m=>pepe2)</th>
+                           <th >@Html.DisplayFor(m=>pmodulo)<br>@Html.DisplayFor(m=>pmodulo2)</th>
                            @for(int j=1;j<=6; j++)
                            {
-                               pepe = semana[i, j,0];
-                               pepe2 = semana[i, j,1];
-                               <td>@Html.DisplayFor(m=>pepe)<br />@Html.DisplayFor(m=>pepe2)</td>
+                               pcurso = semana[i, j,0];
+                               pdocente = semana[i, j,1];
+                               if (pdocente !=null && pcurso != null)
+                                {
+                                    <td><button class="btn btn-color:blue boxed-action" id="delete-dialogo">@pcurso <br /> @pdocente</button></td>
+                                }
+                                else
+                                {
+                                    <td><button class="btn btn-color:grey boxed-action" id="delete2-dialogo">Disponible</button></td>
+                                }
+                              
                            }   
+
                          </tr>
-                    }   
+                    }  
+                    <dialog id="confirm-dialogo" class="site-dialogo" style="animation:reverse; border:none">
+                                  <header class="dialog-header">
+                                    <h4 style="text-align:center">Ingresar Reservas</h4>
+                                  </header>
+                                     <div class="dialog-content ">
+                                         <form>
+                                               <div class="row">
+                                                   <div class="col-md-4">
+                                                           <div asp-validation-summary="ModelOnly"class="text-danger"></div>
+                                                           <div class="form-group">
+                                                               <label id="NombreLab"  class="control-label">Docente</label>
+                                                               <input name="NombreLab" class="form-control"/>
+                                                           </div>
+                                                            <div class="form-group">
+                                                                
+                                                               <label id="DescripcionLab" class="control-label">Curso</label>
+                                                               <input name="DescripcionLab" class="form-control"/>
+                                                           </div>
+                                                            <div class="form-group">
+                                                               <label id="CapacidadLab" class="control-label">Hasta</label>
+                                                               <input name="CapacidadLab" class="form-control" type="date"/>
+                                                           </div>
+                                                   </div>
+                                               </div>
+                                         </form>
+                                       <p>            Todo esto puede ser un FORM que llama a un guardar() como metodo en el controler</p>
+                                     </div>
+                                     <div class="btn-group cf">
+                                       <button class="btn btn-primary" id="Guardar">Guardar</button>
+                                       <button class="btn btn-danger" id="Cancelar">Cancelar</button>
+
+                                     </div>
+                                </dialog> 
                 </tbody>
             </table>
        </div>
