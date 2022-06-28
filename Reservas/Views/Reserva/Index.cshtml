@@ -1,4 +1,4 @@
-﻿@model List<TbReserva>
+﻿@model Reservas.Models.ViewModel.ReservaViewModel
 @{
     var lab = ViewBag.Lab;
     DateTime fecha = ViewBag.fecha;
@@ -10,7 +10,7 @@
     DateTime primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
     , ultimodia=fecha.AddDays(6 - (byte)fecha.DayOfWeek);
     string pmodulo,pmodulo2;
-    string pcurso, pdocente;
+    string pcurso, pdocente, preserva;
     for (int i = 0; i <= 13; i++)
     {
         for (int j = 0; j < 6; j++)
@@ -56,7 +56,7 @@
             </form>
         </div>
         <div class="card-body" style="padding:25px">
-            <table class="table table-bordered border-black">
+            <table class="table table-bordered border-black" >
                 <thead>
                     <tr style="text-align:center">
                         <th>Modulo</th>
@@ -80,6 +80,7 @@
                     {
                         semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,0] = item.Curso;
                         semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,1] = item.Docente;
+                        semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,2] = Convert.ToString(item.IdReserva);
                     }
                      @for (int i = 1; i <= 13; i++)
                     { 
@@ -96,52 +97,22 @@
                         {
                             pcurso = semana[i, j,0];
                             pdocente = semana[i, j,1];
-                            semana[i, j, 2] = (i * 10 + j).ToString();
+                            preserva = semana[i, j, 2];
                             xy = i * 10 + j;
                             if (pdocente !=null && pcurso != null)
                             {
-                                <td><button name="xy" value="@xy" ID="@xy" type="button" class="btn btn-secundary" style="background-color:none " data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                    data-bs-whatever="@xy">@pcurso <br /> @pdocente</button></td>
+                                <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Modificar"asp-route-lab="@lab"
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdUser="1" asp-route-IdReserva="@preserva">@pcurso <br /> @pdocente</a></td>
                             }
                             else
                             {
-                                <td><button name="xy" value="@xy" id="@xy" type="button" style="background:none" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                    data-bs-whatever="@semana[i,j,2]">Disponible @xy</button></td>
+                                <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Create"asp-route-lab="@lab"
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdUser="1">Disponible</a></td>
                             }
                            
                         }   
                         </tr>
                     }  
-                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                     <div class="modal-dialog">
-                       <div class="modal-content">
-                         <div class="modal-header">
-                           <h5 class="modal-title" id="exampleModalLabel">Formulario de Reserva</h5>
-                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                         </div>
-                         <div class="modal-body">
-                           <form>
-
-                             <div class="mb-3">
-                               <p>Laboratorio: @lab<br /></p>
-                               <p>Para el dia: @primerdia.AddDays((@xy%10-1)).ToShortDateString()<br /></p>
-                               <p>Modulo: @(@xy/10)<br /></p>
-                               <label for="recipient-name" class="col-form-label">Actividad:</label>
-                               <input type="text" class="form-control" id="recipient-name">
-                             </div>
-                             <div class="mb-3">
-                               <label for="message-text" class="col-form-label">Responsable:</label>
-                               <input type="text" class="form-control" id="recipient-name">
-                             </div>
-                           </form>
-                         </div>
-                         <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                           <button type="button" class="btn btn-primary">Send message</button>
-                         </div>
-                       </div>
-                     </div>
-                    </div> 
                 }
                 </tbody>
             </table>

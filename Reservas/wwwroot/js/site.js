@@ -9,6 +9,7 @@ exampleModal.addEventListener('show.bs.modal', event => {
     const button = event.relatedTarget
     // Extract info from data-bs-* attributes
     const recipient = button.getAttribute('data-bs-whatever')
+    
     // If necessary, you could initiate an AJAX request here
     // and then do the updating in a callback.
     //
@@ -16,6 +17,6 @@ exampleModal.addEventListener('show.bs.modal', event => {
     const modalTitle = exampleModal.querySelector('.modal-title')
     const modalBodyInput = exampleModal.querySelector('.modal-body input')
 
-    modalTitle.textContent = `New message to ${recipient}`
+    modalTitle.textContent = `Formulario de reserva`
     modalBodyInput.value = recipient
 })

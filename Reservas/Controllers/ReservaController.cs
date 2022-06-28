@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Reservas.Models;
-
+using Reservas.Models.ViewModel;
 namespace Reservas.Controllers
 {
     public class ReservaController : Controller
@@ -42,10 +42,118 @@ namespace Reservas.Controllers
             return View();
         }
 
-        public IActionResult Create()
+        public IActionResult Create(int dia, int mes, int año, int lab)
         {
+            DateTime fecha = new DateTime(año, mes, dia);
+            DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
+            DateTime ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
+
+            ViewData["Lab"] = lab;
+            ViewData["fecha"] = fecha;
+            ViewData["dia"] = fecha.Day;
+            ViewData["mes"] = fecha.Month;
+            ViewData["año"] = fecha.Year;
 
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(ReservaViewModel model, int dia, int mes, int año, int lab)
+        {
+            DateTime fecha = new DateTime(año, mes, dia);
+            DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
+            DateTime ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
+
+            ViewData["Lab"] = lab;
+            ViewData["fecha"] = fecha;
+            ViewData["dia"] = fecha.Day;
+            ViewData["mes"] = fecha.Month;
+            ViewData["año"] = fecha.Year;
+
+            if (ModelState.IsValid)
+            {
+                var reserva = new TbReserva()
+                {
+
+                    IdUsr = model.IdUsr,
+                    FechaReserva = model.FechaReserva,
+                    IdModulo = model.IdModulo,
+                    IdLab = model.IdLab,
+                    Curso = model.Curso,
+                    Docente = model.Docente,
+                    FinReserva = model.FinReserva,
+                };
+                _context.Add(reserva);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+        }
+        public IActionResult Modificar(int IdReserva,int dia, int mes, int año, int lab)
+        {
+            EditarReservaViewModel model = new EditarReservaViewModel();
+            using (var db = new DbReservasContext())
+            {
+                var oReserva = db.TbReservas.Find(IdReserva);
+                model.IdReserva = oReserva.IdReserva;
+                model.IdLab = oReserva.IdLab;
+                model.IdModulo = oReserva.IdModulo;
+                model.FechaReserva = oReserva.FechaReserva;
+                model.FinReserva = oReserva.FinReserva;
+                model.Curso = oReserva.Curso;
+                model.Docente = oReserva.Docente;
+                model.IdUsr = oReserva.IdUsr;
+            }
+
+            DateTime fecha = new DateTime(año, mes, dia);
+            DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
+            DateTime ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
+
+            ViewData["Lab"] = lab;
+            ViewData["fecha"] = fecha;
+            ViewData["dia"] = fecha.Day;
+            ViewData["mes"] = fecha.Month;
+            ViewData["año"] = fecha.Year;
+
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Modificar(EditarReservaViewModel model,int dia, int mes, int año, int lab)
+        {
+            DateTime fecha = new DateTime(año, mes, dia);
+            DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
+            DateTime ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
+
+            ViewData["Lab"] = lab;
+            ViewData["fecha"] = fecha;
+            ViewData["dia"] = fecha.Day;
+            ViewData["mes"] = fecha.Month;
+            ViewData["año"] = fecha.Year;
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (var db = new DbReservasContext())
+            {
+                var oReserva = db.TbReservas.Find(model.IdReserva);
+                oReserva.IdReserva = model.IdReserva;
+                oReserva.IdLab = model.IdLab;
+                oReserva.IdModulo = model.IdModulo;
+                oReserva.FechaReserva = model.FechaReserva;
+                oReserva.FinReserva = model.FinReserva;
+                oReserva.Curso = model.Curso;
+                oReserva.Docente = model.Docente;
+                oReserva.IdUsr = model.IdUsr;
+               
+                db.Entry(oReserva).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+
+            }
+
+            return RedirectToAction("Index","Home");
         }
     }
 }

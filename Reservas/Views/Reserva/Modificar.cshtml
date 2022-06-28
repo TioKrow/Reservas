@@ -1,0 +1,36 @@
+﻿@model Reservas.Models.ViewModel.EditarReservaViewModel
+@{
+    int mes = ViewBag.mes;
+    int año = ViewBag.año;
+    int dia = ViewBag.dia;
+    var lab = ViewBag.Lab;
+}
+<div class="card">
+     <div class="card-header">
+       <h5 class="text-center">Formulario de Reserva</h5>
+     </div>
+     <div class="modal-body">
+       <form method="post">
+         <div class="mb-3">
+           <input type="hidden" asp-for="IdLab" value="@lab" />
+           @Html.HiddenFor(d=>d.IdReserva)
+           @Html.HiddenFor(d=>d.IdUsr)
+           <label asp-for="FechaReserva" class="col-form-label">Desde:</label>
+           <input asp-for="FechaReserva" required type="date"  class="form-control" >
+           <label asp-for="FinReserva" class="col-form-label">Hasta:</label>
+           <input asp-for="FinReserva" required type="date"  class="form-control" >
+           <label asp-for="IdModulo" class="col-form-label">Modulo reserva:</label>
+           <input asp-for="IdModulo" required type="number" class="form-control" >
+           <label asp-for="Curso"  class="col-form-label">Actividad:</label>
+           <input asp-for="Curso" required type="text" class="form-control">
+           <label asp-for="Docente"  class="col-form-label">Docente encargado:</label>
+           <input asp-for="Docente" required type="text" class="form-control" >
+         </div>
+            <a type="button" class="btn btn-secondary" asp-controller="Reserva" asp-action="Index" asp-route-lab="@lab"
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año>Cancelar</a>
+            <input type="submit" asp-route-lab="@lab" asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año  
+                    value="Guardar" class="btn btn-primary"/>
+       </form>
+     </div>
+       
+ </div> 
