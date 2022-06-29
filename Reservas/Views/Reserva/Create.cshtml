@@ -26,8 +26,7 @@
            <input asp-for="FechaReserva"  type="hidden" value=@fechaD.ToShortDateString() class="form-control" >
            <input asp-for="FechaReserva" disabled type="text" value=@fechaD.ToShortDateString() class="form-control" >
            <label asp-for="FinReserva" class="col-form-label">Hasta:</label>
-           <input asp-for="FinReserva" type="hidden" value=@fechaD.ToShortDateString() class="form-control" >
-           <input asp-for="FinReserva" disabled value=@fechaD.ToShortDateString() type="text" class="form-control" >
+           <input asp-for="FinReserva"  type="date" class="form-control" >
            <label asp-for="IdModulo" class="col-form-label">Modulo reserva:</label>
            <input asp-for="IdModulo" hidden type="number" value=@pmodulo class="form-control" >
            <input asp-for="IdModulo" disabled  value=@pmodulo type="number" class="form-control" >

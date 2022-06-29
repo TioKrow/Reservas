@@ -74,18 +74,21 @@ namespace Reservas.Controllers
 
             if (ModelState.IsValid)
             {
-                var reserva = new TbReserva()
+                for (DateTime fechaf = model.FechaReserva; fechaf <= model.FinReserva; fechaf = fechaf.AddDays(7))
                 {
+                    var reserva = new TbReserva()
+                    {
 
-                    IdUsr = model.IdUsr,
-                    FechaReserva = model.FechaReserva,
-                    IdModulo = model.IdModulo,
-                    IdLab = model.IdLab,
-                    Curso = model.Curso,
-                    Docente = model.Docente,
-                    FinReserva = model.FinReserva,
-                };
-                _context.Add(reserva);
+                        IdUsr = model.IdUsr,
+                        FechaReserva = fechaf,
+                        IdModulo = model.IdModulo,
+                        IdLab = model.IdLab,
+                        Curso = model.Curso,
+                        Docente = model.Docente,
+                        FinReserva = model.FinReserva,
+                    };
+                    _context.Add(reserva);
+                }
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
             }
@@ -145,16 +148,18 @@ namespace Reservas.Controllers
             using (var db = new DbReservasContext())
             {
                 var oReserva = db.TbReservas.Find(model.IdReserva);
+                for (DateTime fechaf = model.FechaReserva; fechaf <= model.FinReserva; fechaf = fechaf.AddDays(7))
+                {
                 oReserva.IdReserva = model.IdReserva;
                 oReserva.IdLab = model.IdLab;
                 oReserva.IdModulo = model.IdModulo;
-                oReserva.FechaReserva = model.FechaReserva;
+                oReserva.FechaReserva = fechaf;
                 oReserva.FinReserva = model.FinReserva;
                 oReserva.Curso = model.Curso;
                 oReserva.Docente = model.Docente;
                 oReserva.IdUsr = model.IdUsr;
-               
                 db.Entry(oReserva).State = EntityState.Modified;
+                }
                 await db.SaveChangesAsync();
 
             }
