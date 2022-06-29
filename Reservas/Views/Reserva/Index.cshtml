@@ -5,7 +5,7 @@
     int mes = ViewBag.mes;
     int año = ViewBag.año;
     int dia = ViewBag.dia;
-    int x = 0,xy=0;
+    int x = 0,xy=0,tmod = 0;
     string[,,] semana = new String[14,8,3];
     DateTime primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
     , ultimodia=fecha.AddDays(6 - (byte)fecha.DayOfWeek);
@@ -73,6 +73,7 @@
                 @if(lab!=0) {
                     @foreach (var item in (List<TbModulo>)ViewBag.Modulos)
                     {
+                        tmod++;
                         semana[item.IdModulo, 0,0] = Convert.ToString(item.InicioMod).Substring(0,Convert.ToString(item.InicioMod).Length-3);
                         semana[item.IdModulo, 0,1] = Convert.ToString(item.FinMod).Substring(0,Convert.ToString(item.InicioMod).Length-3);
                     }
@@ -82,7 +83,7 @@
                         semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,1] = item.Docente;
                         semana[item.IdModulo, (byte)item.FechaReserva.DayOfWeek,2] = Convert.ToString(item.IdReserva);
                     }
-                     @for (int i = 1; i <= 13; i++)
+                     @for (int i = 1; i <= tmod; i++)
                     { 
                         pmodulo = semana[i, 0,0];
                         pmodulo2 = semana[i, 0,1];
@@ -102,12 +103,12 @@
                             if (pdocente !=null && pcurso != null)
                             {
                                 <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Modificar"asp-route-lab="@lab"
-                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdUser="1" asp-route-IdReserva="@preserva">@pcurso <br /> @pdocente</a></td>
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-xy=@xy asp-route-año=@año asp-route-IdUser="1" asp-route-tmod=@tmod asp-route-IdReserva="@preserva">@pcurso <br /> @pdocente</a></td>
                             }
                             else
                             {
                                 <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Create"asp-route-lab="@lab"
-                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdUser="1">Disponible</a></td>
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-xy=@xy asp-route-tmod=@tmod asp-route-IdUser="1">Disponible</a></td>
                             }
                            
                         }   

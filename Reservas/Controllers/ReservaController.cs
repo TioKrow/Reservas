@@ -13,7 +13,7 @@ namespace Reservas.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(int dia, int mes, int año, int lab, int x)
+        public async Task<IActionResult> Index(int dia, int mes, int año, int lab, int x, int xy)
         {
             DateTime fecha = new DateTime(año, mes, dia);
             fecha=fecha.AddDays(x);
@@ -26,6 +26,7 @@ namespace Reservas.Controllers
             ViewData["mes"] = fecha.Month;
             ViewData["año"] = fecha.Year;
             ViewData["x"] = 0;
+            ViewData["xy"] = xy;
             
             List<TbModulo> modulos = _context.TbModulos.ToList();
             ViewBag.modulos = modulos;
@@ -42,13 +43,14 @@ namespace Reservas.Controllers
             return View();
         }
 
-        public IActionResult Create(int dia, int mes, int año, int lab)
+        public IActionResult Create(int dia, int mes, int año, int lab, int xy)
         {
             DateTime fecha = new DateTime(año, mes, dia);
             DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
             DateTime ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
 
             ViewData["Lab"] = lab;
+            ViewData["xy"] = xy;
             ViewData["fecha"] = fecha;
             ViewData["dia"] = fecha.Day;
             ViewData["mes"] = fecha.Month;
@@ -57,13 +59,14 @@ namespace Reservas.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(ReservaViewModel model, int dia, int mes, int año, int lab)
+        public async Task<IActionResult> Create(ReservaViewModel model, int dia, int mes, int año, int lab, int xy)
         {
             DateTime fecha = new DateTime(año, mes, dia);
             DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
             DateTime ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
 
             ViewData["Lab"] = lab;
+            ViewData["xy"] = xy;
             ViewData["fecha"] = fecha;
             ViewData["dia"] = fecha.Day;
             ViewData["mes"] = fecha.Month;
@@ -84,12 +87,12 @@ namespace Reservas.Controllers
                 };
                 _context.Add(reserva);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
             }
 
-            return View();
+            return RedirectToAction("Index","Home");
         }
-        public IActionResult Modificar(int IdReserva,int dia, int mes, int año, int lab)
+        public IActionResult Modificar(int IdReserva,int dia, int mes, int año, int lab, int xy)
         {
             EditarReservaViewModel model = new EditarReservaViewModel();
             using (var db = new DbReservasContext())
@@ -110,16 +113,18 @@ namespace Reservas.Controllers
             DateTime ultimodia = fecha.AddDays(6 - (byte)fecha.DayOfWeek);
 
             ViewData["Lab"] = lab;
+            ViewData["xy"] = xy;
             ViewData["fecha"] = fecha;
             ViewData["dia"] = fecha.Day;
             ViewData["mes"] = fecha.Month;
             ViewData["año"] = fecha.Year;
+           
 
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Modificar(EditarReservaViewModel model,int dia, int mes, int año, int lab)
+        public async Task<IActionResult> Modificar(EditarReservaViewModel model,int dia, int mes, int año, int lab, int xy)
         {
             DateTime fecha = new DateTime(año, mes, dia);
             DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
@@ -130,6 +135,7 @@ namespace Reservas.Controllers
             ViewData["dia"] = fecha.Day;
             ViewData["mes"] = fecha.Month;
             ViewData["año"] = fecha.Year;
+            ViewData["xy"] = xy;
 
             if (!ModelState.IsValid)
             {
@@ -154,6 +160,18 @@ namespace Reservas.Controllers
             }
 
             return RedirectToAction("Index","Home");
+        }
+        public async Task<IActionResult> Eliminar(int IdReserva)
+        {
+            EditarReservaViewModel model = new EditarReservaViewModel();
+            using (var db = new DbReservasContext())
+            {
+                var oReserva = db.TbReservas.Find(IdReserva);
+                _context.TbReservas.Remove(oReserva);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
