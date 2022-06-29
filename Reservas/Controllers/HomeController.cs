@@ -15,8 +15,9 @@ namespace Reservas.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int IdU)
         {
+            ViewBag.IdU = IdU;
             return View();
         }
 

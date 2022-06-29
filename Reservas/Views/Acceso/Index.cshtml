@@ -14,6 +14,7 @@
             <div class="row" style="">
                 <div class="col-md-8 offset-sm-2">
                     @Html.HiddenFor(d=>d.RolUsr)
+                    @Html.HiddenFor(d=>d.IdUsr)
                     <form asp-action="Index" method="post">
                         <div class="form-group">
                             <label asp-for="UsernameUsr" class="control-label">Username</label>
@@ -26,7 +27,7 @@
                             <span asp-validation-for="PasswordUsr" class="text-danger"></span>
                         </div>
                         <div class="form-group" style="padding-top:10px">
-                            <input type="submit" value="Iniciar Sesion" asp-route-RolUsr="" class="btn btn-primary" />
+                            <input type="submit" value="Iniciar Sesion" asp-route-RolUsr="" asp-route-IdUsr="" class="btn btn-primary" />
                         </div>
                     </form>
                 </div>
