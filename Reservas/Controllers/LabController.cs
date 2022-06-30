@@ -17,21 +17,24 @@ namespace Reservas.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int IdU)
         {
+            ViewData["IdU"]= IdU;
             return View(await _context.TbLabs.ToListAsync());
         }
 
-        public IActionResult AgregarLab()
+        public IActionResult AgregarLab(int IdU)
         {
+            ViewData["IdU"] = IdU;
             ViewData["Laboratorios"] = new SelectList(_context.TbLabs, "IdLab", "NombreLab", "DescripcionLab", "CapacidadLab");
 
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AgregarLab(LabViewModel model)
+        public async Task<IActionResult> AgregarLab(LabViewModel model, int IdU)
         {
+            ViewData["IdU"] = IdU;
             if (ModelState.IsValid)
             {
                 var lab = new TbLab()
@@ -43,14 +46,14 @@ namespace Reservas.Controllers
                 };
                 _context.Add(lab);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
             ViewData["Laboratorios"] = new SelectList(_context.TbLabs, "IdLab", "NombreLab");
 
-            return View();
+            return RedirectToAction("Index", "Lab", new { IdU = @IdU });
         }
-        public async Task<IActionResult> ModificarLab(int IdLab)
+        public async Task<IActionResult> ModificarLab(int IdLab,int IdU)
         {
+            ViewData["IdU"] = IdU;
             EditarLabViewModel model = new EditarLabViewModel();
             using (var db = new DbReservasContext())
             {
@@ -65,8 +68,9 @@ namespace Reservas.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ModificarLab(EditarLabViewModel model)
+        public async Task<IActionResult> ModificarLab(EditarLabViewModel model, int IdU)
         {
+            ViewData["IdU"] = IdU;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -81,19 +85,19 @@ namespace Reservas.Controllers
                 db.Entry(oLab).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Lab");
+            return RedirectToAction("Index", "Lab", new {IdU= @IdU});
         }
-        public async Task<IActionResult> EliminarLab(int IdLab)
+        public async Task<IActionResult> EliminarLab(int IdLab, int IdU)
         {
+            ViewData["IdU"] = IdU;
             EditarLabViewModel model = new EditarLabViewModel();
             using (var db = new DbReservasContext())
             {
                 var oLab = db.TbLabs.Find(IdLab);
-                _context.TbLabs.Remove(oLab);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Lab");
+                db.TbLabs.Remove(oLab);
+                await db.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Lab");
+            return RedirectToAction("Index", "Lab", new {IdU = @IdU});
         }
     }
 }

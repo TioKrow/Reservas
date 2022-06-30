@@ -1,6 +1,8 @@
 ﻿@using Reservas.Models.ViewModel
 @model ModuloViewModel
-
+@{
+    int IdU = ViewBag.IdU;
+}
 
 <h1>Agregar Modulos</h1>
 
@@ -11,16 +13,17 @@
             <div asp-validation-summary="ModelOnly"class="text-danger"></div>
              <div class="form-group">
                 <label asp-for="InicioMod" class="control-label"></label>
-                <input asp-for="InicioMod" class="form-control" type="time"/>
+                <input asp-for="InicioMod" required class="form-control" type="time"/>
                 <span asp-validation-for="InicioMod" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="FinMod" class="control-label"></label>
-                <input asp-for="FinMod" class="form-control" type="time"/>
+                <input asp-for="FinMod" required class="form-control" type="time"/>
                 <span asp-validation-for="FinMod" class="text-danger"></span>
             </div>
             <div class="form-group" style="padding-top:10px">
-                    <input type="submit" value="Agregar" class="btn btn-primary" />
+                 <a type="button" class="btn btn-secondary" asp-controller="Modulo" asp-action="Index" asp-route-IdU=@IdU>Cancelar</a>
+                    <input type="submit" value="Agregar" class="btn btn-primary" asp-route-IdU=@IdU/>
             </div>
         </form>
     </div>

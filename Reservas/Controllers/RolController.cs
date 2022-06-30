@@ -15,8 +15,9 @@ namespace Reservas.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int IdU)
         {
+            ViewData["IdU"] = IdU;
             return View(await _context.TbRols.ToListAsync());
         }
     }

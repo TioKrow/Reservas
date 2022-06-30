@@ -1,6 +1,8 @@
 ﻿@using Reservas.Models.ViewModel
 @model LabViewModel
-
+@{
+    int IdU = ViewBag.IdU;
+}
 
 <h1>Agregar Laboratorio</h1>
 
@@ -11,21 +13,22 @@
             <div asp-validation-summary="ModelOnly"class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="NombreLab" class="control-label"></label>
-                <input asp-for="NombreLab" class="form-control"/>
+                <input asp-for="NombreLab" required class="form-control"/>
                 <span asp-validation-for="NombreLab" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="DescripcionLab" class="control-label"></label>
-                <input asp-for="DescripcionLab" class="form-control"/>
+                <input asp-for="DescripcionLab" required class="form-control"/>
                 <span asp-validation-for="DescripcionLab" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="CapacidadLab" class="control-label"></label>
-                <input asp-for="CapacidadLab" class="form-control" type="number"/>
+                <input asp-for="CapacidadLab" required class="form-control" type="number"/>
                 <span asp-validation-for="CapacidadLab" class="text-danger"></span>
             </div>
             <div class="form-group" style="padding-top:10px">
-                    <input type="submit" value="Agregar" class="btn btn-primary" />
+                 <a type="button" class="btn btn-secondary" asp-controller="Lab" asp-action="Index" asp-route-IdU=@IdU>Cancelar</a>
+                 <input type="submit" value="Agregar" class="btn btn-primary" asp-route-IdU=@IdU/>
             </div>
         </form>
     </div>

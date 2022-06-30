@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Reservas.Models;
-
 using Reservas.Models.ViewModel;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
@@ -25,7 +24,7 @@ namespace Reservas.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(UsrViewModel _usuario)
         {
-
+            int IdU;
             using (var context = _context)
             {
                 var lst = from d in _context.TbUsrs
@@ -36,7 +35,7 @@ namespace Reservas.Controllers
                 if (lst.Count() > 0)
                 {
                     TbUsr oUser = lst.First();
-                    
+                    IdU = oUser.IdUsr;
                     var claims = new List<Claim> {
                      new Claim(ClaimTypes.Name,oUser.UsernameUsr),
                      new Claim(ClaimTypes.Role,Convert.ToString(oUser.RolUsr))
@@ -47,10 +46,8 @@ namespace Reservas.Controllers
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-                    ViewBag.IdU = oUser.IdUsr;
 
-
-                    return RedirectToAction("Index", "Home","IdU="+Convert.ToString(oUser.IdUsr));
+                    return RedirectToAction("Index", "Home", new {IdU = @IdU});
                 }
             }
 

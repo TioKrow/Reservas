@@ -1,6 +1,8 @@
 ﻿@using Reservas.Models.ViewModel
 @model EditarModuloViewModel
-
+@{
+    int IdU = ViewBag.IdU;
+}
 
 <h1>Editar Modulos</h1>
 
@@ -12,12 +14,12 @@
             <div asp-validation-summary="ModelOnly"class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="IdModulo" class="control-label"></label>
-                <input asp-for="IdModulo" class="form-control" disabled/>
+                <input asp-for="IdModulo" required class="form-control" disabled/>
                 <span asp-validation-for="IdModulo" class="text-danger"></span>
             </div>
              <div class="form-group">
                 <label asp-for="InicioMod" class="control-label"></label>
-                <input asp-for="InicioMod" class="form-control"type="time"/>
+                <input asp-for="InicioMod" required class="form-control"type="time"/>
                 <span asp-validation-for="InicioMod" class="text-danger"></span>
             </div>
              <div class="form-group">
@@ -26,7 +28,8 @@
                 <span asp-validation-for="FinMod" class="text-danger"></span>
             </div>
             <div class="form-group" style="padding-top:10px">
-                    <input type="submit" value="Modificar" class="btn btn-primary" />
+                 <a type="button" class="btn btn-secondary" asp-controller="Modulo" asp-action="Index" asp-route-IdU=@IdU>Cancelar</a>
+                 <input type="submit" value="Modificar" class="btn btn-primary" asp-route-IdU=@IdU/>
             </div>
         </form>
     </div>

@@ -16,20 +16,23 @@ namespace Reservas.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int IdU)
         {
+            ViewData["IdU"]=IdU;
             return View(await _context.TbModulos.ToListAsync());
         }
-        public IActionResult AgregarMod()
+        public IActionResult AgregarMod(int IdU)
         {
+            ViewData["IdU"] = IdU;
             ViewData["Modulos"] = new SelectList(_context.TbModulos, "IdModulo", "InicioMod", "FinMod");
 
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AgregarMod(ModuloViewModel model)
+        public async Task<IActionResult> AgregarMod(ModuloViewModel model,int IdU)
         {
+            ViewData["IdU"] = IdU;
             if (ModelState.IsValid)
             {
                 var mod = new TbModulo()
@@ -45,8 +48,9 @@ namespace Reservas.Controllers
 
             return View();
         }
-        public async Task<IActionResult> ModificarMod(int IdModulo)
+        public async Task<IActionResult> ModificarMod(int IdModulo, int IdU)
         {
+            ViewData["IdU"] = IdU;
             EditarModuloViewModel model = new EditarModuloViewModel();
             using (var db = new DbReservasContext())
             {
@@ -60,8 +64,9 @@ namespace Reservas.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ModificarMod(EditarModuloViewModel model)
+        public async Task<IActionResult> ModificarMod(EditarModuloViewModel model, int IdU)
         {
+            ViewData["IdU"] = IdU;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -75,7 +80,7 @@ namespace Reservas.Controllers
                 db.Entry(oMod).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Modulo");
+            return RedirectToAction("Index", "Modulo", new {IdU= @IdU});
         }
     }
 }

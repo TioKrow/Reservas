@@ -4,6 +4,7 @@
     DateTime fecha = DateTime.Now;
     int dia = fecha.Day, mes = fecha.Month, año = fecha.Year;
     string fechaPaso =  Convert.ToString(mes)+" "+ Convert.ToString(dia)+" "+Convert.ToString(año);
+    var IdU = ViewBag.IdU;
 }
 <html lang="en">
 <head>
@@ -19,7 +20,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
 
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Reservas</a>
+                <a class="navbar-brand"><img src="~/lib/LogoUCSC.jpeg" style="width:100px" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,26 +28,26 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"asp-route-IdU=@IdU>Inicio</a>
                         </li>
                         @if (User.IsInRole("1"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Modulo" asp-action="Index">Modulos</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Modulo" asp-action="Index"asp-route-IdU=@IdU>Modulos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Lab" asp-action="Index">Laboratorios</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Lab" asp-action="Index"asp-route-IdU=@IdU>Laboratorios</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Rol" asp-action="Index">Roles</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Rol" asp-action="Index"asp-route-IdU=@IdU>Roles</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Usr" asp-action="Index">Usuarios</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Usr" asp-action="Index"asp-route-IdU=@IdU>Usuarios</a>
                             </li>
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Reserva" asp-action="Index" asp-route-lab="0"
-                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año>Reserva</a>
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdU=@IdU>Reserva</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Acceso" asp-action="Salir">Cerrar Sesion</a>

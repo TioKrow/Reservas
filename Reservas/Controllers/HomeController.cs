@@ -17,7 +17,7 @@ namespace Reservas.Controllers
 
         public IActionResult Index(int IdU)
         {
-            ViewBag.IdU = IdU;
+            ViewData["IdU"] = IdU;
             return View();
         }
 

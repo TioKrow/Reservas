@@ -5,6 +5,7 @@
     int dia = ViewBag.dia;
     var lab = ViewBag.Lab;
     var xy = ViewBag.xy;
+    var IdU = ViewBag.IdU;
     int pdia, pmodulo,preserva=Model.IdReserva;
     pmodulo = (xy / 10 );
     pdia = xy - pmodulo * 10;
@@ -12,7 +13,7 @@
     DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
     fechaD = primerdia.AddDays(pdia - 1);
 }
-<div class="card">
+<div class="card col-md-4 offset-sm-4" style="margin-top: 50px">
      <div class="card-header">
        <h5 class="text-center">Formulario Modificación de Reserva</h5>
      </div>
@@ -37,10 +38,11 @@
            <input asp-for="Docente" required type="text" class="form-control" >
          </div>
             <a type="button" class="btn btn-secondary" asp-controller="Reserva" asp-action="Index" asp-route-lab="@lab"
-                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año>Cancelar</a>
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdU=@IdU>Cancelar</a>
             <input type="submit" asp-route-lab="@lab" asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año  
-                    value="Guardar" class="btn btn-primary"/>
-            <a asp-action="Eliminar" class="btn btn-danger"asp-route-IdReserva="@Model.IdReserva">Eliminar</a>
+                    value="Guardar" class="btn btn-primary" asp-route-IdU=@IdU/>
+            <a asp-action="Eliminar" class="btn btn-danger"asp-route-IdReserva="@Model.IdReserva" asp-route-lab="@lab"
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdU=@IdU>Eliminar</a>
        </form>
      </div>
        

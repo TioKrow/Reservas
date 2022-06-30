@@ -17,15 +17,17 @@ namespace Reservas.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int IdU)
         {
+            ViewData["IdU"] = IdU;
             var usrs = _context.TbUsrs.Include(b => b.RolUsrNavigation);
             
             return View(await usrs.ToListAsync());
         }
 
-        public IActionResult Create()
+        public IActionResult Create(int IdU)
         {
+            ViewData["IdU"] = IdU;
             ViewData["Roles"] = new SelectList(_context.TbRols, "IdRol", "NombreRol");
 
             return View();
@@ -33,8 +35,9 @@ namespace Reservas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UsrViewModel model)
+        public async Task<IActionResult> Create(UsrViewModel model, int IdU)
         {
+            ViewData["IdU"] = IdU;
             if (ModelState.IsValid)
             {
                 var usr = new TbUsr()
@@ -49,15 +52,15 @@ namespace Reservas.Controllers
                 };
                 _context.Add(usr);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
             ViewData["Roles"] = new SelectList(_context.TbRols, "IdRol", "NombreRol",model.RolUsr);
 
-            return View();
+            return RedirectToAction("Index", "Usr", new { IdU = @IdU });
         }
 
-        public async Task<IActionResult> Modificar(int IdUsr)
+        public async Task<IActionResult> Modificar(int IdUsr, int IdU)
         {
+            ViewData["IdU"] = IdU;
             EditarUsrViewModel model = new EditarUsrViewModel();
             using (var db = new DbReservasContext())
             {
@@ -78,8 +81,9 @@ namespace Reservas.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Modificar(EditarUsrViewModel model)
+        public async Task<IActionResult> Modificar(EditarUsrViewModel model, int IdU)
         {
+            ViewData["IdU"] = IdU;
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -103,19 +107,19 @@ namespace Reservas.Controllers
                 
             }
 
-            return RedirectToAction("Index","Usr");
+            return RedirectToAction("Index","Usr", new {IdU=@IdU});
         }
-        public async Task<IActionResult> Eliminar(int IdUsr)
+        public async Task<IActionResult> Eliminar(int IdUsr, int IdU)
         {
+            ViewData["IdU"] = IdU;
             EditarUsrViewModel model = new EditarUsrViewModel();
             using (var db = new DbReservasContext())
             {
                 var oUser = db.TbUsrs.Find(IdUsr);
                 _context.TbUsrs.Remove(oUser);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Usr");
             }
-            return RedirectToAction("Index", "Usr");
+            return RedirectToAction("Index", "Usr", new {Idu=@IdU});
         }
 
     }

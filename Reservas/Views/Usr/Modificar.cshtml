@@ -1,5 +1,7 @@
 ﻿@model Reservas.Models.ViewModel.EditarUsrViewModel
-
+@{
+    int IdU = ViewBag.IdU;
+}
 
 <h1>Modificar Usuario</h1>
 
@@ -45,7 +47,8 @@
                 <span asp-validation-for="PasswordUsr" class="text-danger"></span>
             </div>
             <div class="form-group" style="padding-top:10px">
-                    <input type="submit" value="Modificar" class="btn btn-primary" />
+                 <a type="button" class="btn btn-secondary" asp-controller="Usr" asp-action="Index" asp-route-IdU=@IdU>Cancelar</a>
+                 <input type="submit" value="Modificar" class="btn btn-primary" asp-route-IdU=@IdU/>
             </div>
         </form>
     </div>

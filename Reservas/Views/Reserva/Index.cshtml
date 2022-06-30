@@ -6,6 +6,7 @@
     int año = ViewBag.año;
     int dia = ViewBag.dia;
     int x = 0,xy=0,tmod = 0;
+    int IdU = ViewBag.IdU;
     string[,,] semana = new String[14,8,3];
     DateTime primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
     , ultimodia=fecha.AddDays(6 - (byte)fecha.DayOfWeek);
@@ -27,6 +28,7 @@
                 <input id="dia" name="dia" type="hidden" value=@dia>
                 <input id="mes" name="mes" type="hidden" value=@mes>
                 <input id="año" name="año" type="hidden" value=@año>
+                <input id="IdU" name="IdU" type="hidden" value=@IdU>
                 
                 <div class="container">
                     <div class="row">
@@ -61,12 +63,12 @@
                     <tr style="text-align:center">
                         <th>Modulo</th>
                         <th>Hora</th>
-                        <th>Lunes</th>
-                        <th>Martes</th>
-                        <th>Miercoles</th>
-                        <th>Jueves</th>
-                        <th>Viernes</th>
-                        <th>Sabado</th>
+                        <th>Lunes @primerdia.Day</th>
+                        <th>Martes @primerdia.AddDays(1).Day</th>
+                        <th>Miercoles @primerdia.AddDays(2).Day</th>
+                        <th>Jueves @primerdia.AddDays(3).Day</th>
+                        <th>Viernes @primerdia.AddDays(4).Day</th>
+                        <th>Sabado @primerdia.AddDays(5).Day</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,17 +102,33 @@
                             pdocente = semana[i, j,1];
                             preserva = semana[i, j, 2];
                             xy = i * 10 + j;
-                            if (pdocente !=null && pcurso != null)
+                            if (primerdia.AddDays(j) >= DateTime.Now)
                             {
-                                <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Modificar"asp-route-lab="@lab"
-                            asp-route-dia=@dia asp-route-mes=@mes asp-route-xy=@xy asp-route-año=@año asp-route-IdUser="1" asp-route-tmod=@tmod asp-route-IdReserva="@preserva">@pcurso <br /> @pdocente</a></td>
+                                if (pdocente != null && pcurso != null)
+                                {
+                                <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Modificar" asp-route-lab="@lab"
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-xy=@xy asp-route-año=@año asp-route-IdU=@IdU asp-route-tmod=@tmod 
+                            asp-route-xy=@xy asp-route-IdReserva="@preserva">@pcurso <br /> @pdocente</a></td>
                             }
                             else
                             {
-                                <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Create"asp-route-lab="@lab"
-                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-xy=@xy asp-route-tmod=@tmod asp-route-IdUser="1">Disponible</a></td>
+                                <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Create" asp-route-lab="@lab"
+                            asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-tmod=@tmod asp-route-xy=@xy asp-route-IdU=@IdU>Disponible</a></td>
                             }
-                           
+                            }
+                            else
+                            {
+                                if (pdocente != null && pcurso != null)
+                                {
+                                    <td><a for="xy" Id="@xy" value="@xy"    style="background-color:none" 
+                                    data-bs-whatever="@xy">@pcurso <br /> @pdocente</a></td>
+                                }
+                                else
+                                {
+                                    <td><a for="xy" Id="@xy" value="@xy"  style="background:none"   
+                                    data-bs-target="#Form-Reserva">  </a></td>
+                                }
+                            }
                         }   
                         </tr>
                     }  

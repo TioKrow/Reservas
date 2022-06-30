@@ -1,4 +1,7 @@
 ﻿@model List<TbLab>
+@{
+    int IdU = ViewBag.IdU;
+}
 <div class="card">
     <div class="card-header">
     <h4>Tabla de Laboratorios</h4>
@@ -10,7 +13,7 @@
                 <th>Laboratorio</th>
                 <th>Descripcion</th>
                 <th>Capacidad</th>
-                <th><a asp-action="AgregarLab" class="btn btn-success btn-sm" asp-route-IdLab="0">Agregar</a></th>
+                <th><a asp-action="AgregarLab" class="btn btn-success btn-sm" asp-route-IdLab="0" asp-route-IdU=@IdU>Agregar</a></th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +24,8 @@
                 <td>@Html.DisplayFor(m=>tblab.DescripcionLab)</td>
                 <td>@Html.DisplayFor(m=>tblab.CapacidadLab)</td>
                 <td>
-                    <a asp-action="ModificarLab" class="btn btn-primary btn-sm"asp-route-IdLab="@tblab.IdLab">Editar</a>
-                    <a asp-action="EliminarLab" class="btn btn-danger btn-sm"asp-route-IdLab="@tblab.IdLab">Eliminar</a>
+                    <a asp-action="ModificarLab" class="btn btn-primary btn-sm"asp-route-IdLab="@tblab.IdLab"asp-route-IdU=@IdU>Editar</a>
+                    <a asp-action="EliminarLab" class="btn btn-danger btn-sm"asp-route-IdLab="@tblab.IdLab"asp-route-IdU=@IdU>Eliminar</a>
                 </td>
             </tr>
         }

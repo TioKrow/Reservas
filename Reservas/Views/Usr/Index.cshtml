@@ -1,5 +1,7 @@
 ﻿@model List<TbUsr>
-
+@{
+    int IdU = ViewBag.IdU;
+}
 <div class="card">
     <div class="card-header">
     <h4>Tabla de Usuarios</h4>
@@ -26,7 +28,7 @@
                     <th>
                         Username
                     </th>
-                    <th><a asp-action="Create" class="btn btn-success btn-sm" asp-route-IdUsr="0">Crear</a></th>
+                    <th><a asp-action="Create" class="btn btn-success btn-sm" asp-route-IdUsr="0" asp-route-IdU=@IdU>Crear</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -52,8 +54,8 @@
                         @Html.DisplayFor(m=>tbusr.UsernameUsr)
                     </td>
                     <td>
-                        <a asp-action="Modificar" class="btn btn-primary btn-sm"asp-route-IdUsr="@tbusr.IdUsr">Editar</a>
-                        <a asp-action="Eliminar" class="btn btn-danger btn-sm"asp-route-IdUsr="@tbusr.IdUsr">Eliminar</a>
+                        <a asp-action="Modificar" class="btn btn-primary btn-sm"asp-route-IdUsr="@tbusr.IdUsr" asp-route-IdU=@IdU>Editar</a>
+                        <a asp-action="Eliminar" class="btn btn-danger btn-sm"asp-route-IdUsr="@tbusr.IdUsr" asp-route-IdU=@IdU>Eliminar</a>
                     </td>
                 </tr>
             }

@@ -1,4 +1,7 @@
 ﻿@model List<TbModulo>
+@{
+    int IdU = ViewBag.IdU;
+}
 <div class="card">
     <div class="card-header">
     <h4>Tabla de Modulos</h4>
@@ -10,7 +13,7 @@
                 <th>Modulo</th>
                 <th>Hora de inicio</th>
                 <th>Hora de termino</th>
-                <th><a asp-action="AgregarMod" class="btn btn-success btn-sm" asp-route-IdModulo="0">Agregar</a></th>
+                <th><a asp-action="AgregarMod" class="btn btn-success btn-sm" asp-route-IdModulo="0" asp-route-IdU=@IdU>Agregar</a></th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +24,7 @@
                 <td>@Html.DisplayFor(m=>tbModulo.InicioMod)</td>
                 <td>@Html.DisplayFor(m=>tbModulo.FinMod)</td>
                 <td>
-                    <a asp-action="ModificarMod" class="btn btn-primary btn-sm"asp-route-IdModulo="@tbModulo.IdModulo">Editar</a>
+                    <a asp-action="ModificarMod" class="btn btn-primary btn-sm"asp-route-IdModulo="@tbModulo.IdModulo" asp-route-IdU=@IdU>Editar</a>
                 </td>
             </tr>
         }
