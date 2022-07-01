@@ -22,7 +22,7 @@
        <form method="post">
          <div class="mb-3">
            <input type="hidden" asp-for="IdLab" value="@lab" />
-           <input type="hidden" asp-for="IdUsr" value="1" />
+           <input type="hidden" asp-for="IdUsr" value="@IdU" />
            @Html.HiddenFor(d=>d.IdUsr)
            <label asp-for="FechaReserva" class="col-form-label">Desde:</label>
            <input asp-for="FechaReserva"  type="hidden" value=@fechaD.ToShortDateString() class="form-control" >

@@ -126,7 +126,7 @@ namespace Reservas.Controllers
             ViewData["mes"] = fecha.Month;
             ViewData["año"] = fecha.Year;
             ViewData["IdU"] = IdU;
-
+             
             return View(model);
         }
         [HttpPost]
@@ -148,6 +148,10 @@ namespace Reservas.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
+            }
+            if (IdU !=1 && IdU !=model.IdUsr)
+            {
+                return RedirectToAction("Index", "Reserva", new { Idu = @IdU, dia = @dia, mes = @mes, año = @año, lab = @lab });
             }
             if (model.FinReserva < model.FechaReserva)
             {
