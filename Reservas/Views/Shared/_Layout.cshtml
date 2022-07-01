@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 <!DOCTYPE html>
+
 @{
     DateTime fecha = DateTime.Now;
     int dia = fecha.Day, mes = fecha.Month, año = fecha.Year;
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Reservas.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Estilos", required: false)
 </head>
 <body>
     <header>

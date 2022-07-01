@@ -1,4 +1,11 @@
 ﻿@model Reservas.Models.ViewModel.ReservaViewModel
+
+@section Estilos{
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"  />
+    <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+}  
+
 @{
     var lab = ViewBag.Lab;
     DateTime fecha = ViewBag.fecha;
@@ -58,7 +65,7 @@
             </form>
         </div>
         <div class="card-body" style="padding:25px">
-            <table class="table table-bordered border-black" >
+            <table  id="Botones" class="table table-bordered border-black" >
                 <thead>
                     <tr style="text-align:center">
                         <th>Modulo</th>
@@ -93,7 +100,7 @@
                         <tr style="text-align:center">
                         @if (semana[i, 0, 0] != "")
                         {
-                            <th>@i</th>
+                            <th style="padding-top: 20px"><h5>@i</h5> </th>
                         }
                         <th >@Html.DisplayFor(m=>pmodulo)<br>@Html.DisplayFor(m=>pmodulo2)</th>
                         @for(int j=1;j<=6; j++)
@@ -137,3 +144,36 @@
             </table>
        </div>
 </div>
+
+@section scripts{
+    
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+    
+
+    <script>
+        $(document).ready(function () {
+            $('#Botones').DataTable({
+                dom: 'Bfrtip',searching: false,
+                buttons: [
+                    'excel',
+                    'pdf',
+                    {
+                        extend: 'print',
+                        text: 'Imprimir',
+                        exportOptions: {
+                            modifier: {
+                                selected: null
+                            }
+                        }
+                    }
+                ],
+                select: true
+            });
+        });
+    </script>
+}

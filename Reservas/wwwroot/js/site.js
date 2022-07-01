@@ -20,3 +20,4 @@ exampleModal.addEventListener('show.bs.modal', event => {
     modalTitle.textContent = `Formulario de reserva`
     modalBodyInput.value = recipient
 })
+
