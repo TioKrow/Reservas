@@ -6,13 +6,13 @@
 
 }  
 
-@{
+    @{
     var lab = ViewBag.Lab;
     DateTime fecha = ViewBag.fecha;
     int mes = ViewBag.mes;
     int año = ViewBag.año;
     int dia = ViewBag.dia;
-    int x = 0,xy=0,tmod = 0;
+    int x = 0, xy = 0, tmod = 0, h2 = 0;
     int IdU = ViewBag.IdU;
     string[,,] semana = new String[14,8,3];
     DateTime primerdia=fecha.AddDays(-(byte)fecha.DayOfWeek + 1)
@@ -61,6 +61,7 @@
                             <input type="submit" class="btn btn-primary" asp-route-lab="@lab"value="Buscar"/>
                         </div>
                       </div>
+                    </div>
                 </div>
             </form>
         </div>
@@ -109,13 +110,16 @@
                             pdocente = semana[i, j,1];
                             preserva = semana[i, j, 2];
                             xy = i * 10 + j;
-                            if (primerdia.AddDays(j) >= DateTime.Now)
+                                if (i < 4) h2 = 7 + i;else h2 = 8 + i;
+
+
+                                if (primerdia.AddDays(j-1).AddHours((h2)) > DateTime.Now)
                             {
                                 if (pdocente != null && pcurso != null)
                                 {
-                                <td><a type="button" style="background:none" class="btn btn-secundary" asp-action="Modificar" asp-route-lab="@lab"
+                                <td><a type="text/html" style="background:none" class="btn btn-secundary" asp-action="Modificar" asp-route-lab="@lab"
                             asp-route-dia=@dia asp-route-mes=@mes asp-route-xy=@xy asp-route-año=@año asp-route-IdU=@IdU asp-route-tmod=@tmod 
-                            asp-route-xy=@xy asp-route-IdReserva="@preserva">@pcurso <br /> @pdocente</a></td>
+                            asp-route-xy=@xy asp-route-IdReserva="@preserva"><h6 style="color:blue">@pcurso <br /> @pdocente</h6></a></td>
                             }
                             else
                             {
@@ -127,13 +131,11 @@
                             {
                                 if (pdocente != null && pcurso != null)
                                 {
-                                    <td><a for="xy" Id="@xy" value="@xy"    style="background-color:none" 
-                                    data-bs-whatever="@xy">@pcurso <br /> @pdocente</a></td>
+                                    <td><a style="color:cadetblue">@pcurso <br /> @pdocente</a></td>
                                 }
                                 else
                                 {
-                                    <td><a for="xy" Id="@xy" value="@xy"  style="background:none"   
-                                    data-bs-target="#Form-Reserva">  </a></td>
+                                    <td><a style="color:cadetblue">         -         </a></td>
                                 }
                             }
                         }   
