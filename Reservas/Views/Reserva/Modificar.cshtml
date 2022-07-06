@@ -9,7 +9,7 @@
     int pdia, pmodulo,preserva=Model.IdReserva;
     pmodulo = (xy / 10 );
     pdia = xy - pmodulo * 10;
-    DateTime fecha = new DateTime(año,mes,dia),fechaD;
+    DateTime fecha = new DateTime(año, mes, dia), fechaD;
     DateTime primerdia = fecha.AddDays(-(byte)fecha.DayOfWeek + 1);
     fechaD = primerdia.AddDays(pdia - 1);
 }
@@ -27,22 +27,39 @@
            <input asp-for="FechaReserva"  type="hidden" value=@fechaD.ToShortDateString() class="form-control" >
            <input asp-for="FechaReserva" disabled type="text" value=@fechaD.ToShortDateString() class="form-control" >
            <label asp-for="FinReserva" class="col-form-label">Hasta:</label>
-           <input asp-for="FinReserva" type="hidden" value=@fechaD.ToShortDateString() class="form-control" >
-           <input asp-for="FinReserva" disabled value=@fechaD.ToShortDateString() type="text" class="form-control" >
+           <input asp-for="FinReserva" type="hidden" value=@Model.FinReserva class="form-control" >
+           <input asp-for="FinReserva" disabled value=@fechaD.ToShortDateString() type="Text" class="form-control" >
            <label asp-for="IdModulo" class="col-form-label">Modulo reserva:</label>
            <input asp-for="IdModulo" hidden type="number" value=@pmodulo class="form-control" >
            <input asp-for="IdModulo" disabled  value=@pmodulo type="number" class="form-control" >
-           <label asp-for="Curso"  class="col-form-label">Actividad:</label>
-           <input asp-for="Curso" required type="text" class="form-control">
-           <label asp-for="Docente"  class="col-form-label">Docente encargado:</label>
-           <input asp-for="Docente" required type="text" class="form-control" >
+            @if (Model.IdUsr!=IdU && IdU!=1){
+                <label asp-for="Curso" class="col-form-label">Actividad:</label>
+                <input asp-for="Curso" type="hidden" value=@Model.Curso class="form-control">
+                <input asp-for="Curso" disabled type="text" value=@Model.Curso class="form-control">
+                <label asp-for="Docente" class="col-form-label">Docente encargado:</label>
+                <input asp-for="Docente" type="hidden" value=@Model.Docente class="form-control" >
+                <input asp-for="Docente" disabled type="text" value=@Model.Docente class="form-control" >
+            }
+            else 
+            {
+                <label asp-for="Curso" class="col-form-label">Actividad m:</label>
+                <input asp-for="Curso" required type="text" class="form-control">
+                <label asp-for="Docente" class="col-form-label">Docente encargado m:</label>
+                <input asp-for="Docente" required type="text" class="form-control" >
+            }
          </div>
             <a type="button" class="btn btn-secondary" asp-controller="Reserva" asp-action="Index" asp-route-lab="@lab"
                             asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdU=@IdU>Cancelar</a>
-            <input type="submit" asp-route-lab="@lab" asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año  
-                    value="Guardar" class="btn btn-primary" asp-route-IdU=@IdU/>
-            <a asp-action="Eliminar" class="btn btn-danger"asp-route-IdReserva="@Model.IdReserva" asp-route-lab="@lab"
+            @if (Model.IdUsr!=IdU && IdU!=1){
+
+            }
+            else {
+                 <input type="submit" asp-route-lab="@lab" asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año  
+                         value="Guardar" class="btn btn-primary" asp-route-IdU=@IdU/>
+                 <a asp-action="Eliminar" class="btn btn-danger"asp-route-IdReserva="@Model.IdReserva" asp-route-lab="@lab"
                             asp-route-dia=@dia asp-route-mes=@mes asp-route-año=@año asp-route-IdU=@IdU>Eliminar</a>
+            }
+
        </form>
      </div>
        

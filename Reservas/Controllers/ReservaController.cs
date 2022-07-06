@@ -111,10 +111,7 @@ namespace Reservas.Controllers
             using (var db = new DbReservasContext())
             {
                 var oReserva = db.TbReservas.Find(IdReserva);
-                if (IdU != 1 && IdU != oReserva.IdUsr)
-                {
-                    return RedirectToAction("Index", "Reserva", new { Idu = @IdU, dia = @dia, mes = @mes, año = @año, lab = @lab });
-                }
+                
                 model.IdReserva = oReserva.IdReserva;
                 model.IdLab = oReserva.IdLab;
                 model.IdModulo = oReserva.IdModulo;
@@ -159,10 +156,10 @@ namespace Reservas.Controllers
             {
                 return View(model);
             }
-            if (IdU !=1 && IdU !=model.IdUsr)
-            {
-                return RedirectToAction("Index", "Reserva", new { Idu = @IdU, dia = @dia, mes = @mes, año = @año, lab = @lab });
-            }
+            //if (IdU !=1 && IdU !=model.IdUsr)
+            //{
+            //    return RedirectToAction("Index", "Reserva", new { Idu = @IdU, dia = @dia, mes = @mes, año = @año, lab = @lab });
+            //}
             if (model.FinReserva < model.FechaReserva)
             {
                 return RedirectToAction("Index", "Reserva", new { Idu = @IdU, dia = @dia, mes = @mes, año = @año, lab = @lab });
