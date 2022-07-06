@@ -48,7 +48,7 @@ namespace Reservas.Controllers
 
             return View();
         }
-        public async Task<IActionResult> ModificarMod(int IdModulo, int IdU)
+        public IActionResult ModificarMod(int IdModulo, int IdU)
         {
             ViewData["IdU"] = IdU;
             EditarModuloViewModel model = new EditarModuloViewModel();

@@ -13,7 +13,7 @@ namespace Reservas.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(int dia, int mes, int año, int lab, int x, int xy, int IdU)
+        public IActionResult Index(int dia, int mes, int año, int lab, int x, int xy, int IdU)
         {
             DateTime fecha = new DateTime(año, mes, dia);
             fecha=fecha.AddDays(x);
@@ -96,15 +96,25 @@ namespace Reservas.Controllers
                 }
                 await _context.SaveChangesAsync();
             }
+            else
+            {
+                return View();
+            }
 
             return RedirectToAction("Index","Reserva", new {Idu=@IdU, dia=@dia, mes=@mes, año=@año, lab=@lab});
         }
         public IActionResult Modificar(int IdReserva,int dia, int mes, int año, int lab, int xy, int IdU)
         {
+            
             EditarReservaViewModel model = new EditarReservaViewModel();
+          
             using (var db = new DbReservasContext())
             {
                 var oReserva = db.TbReservas.Find(IdReserva);
+                if (IdU != 1 && IdU != oReserva.IdUsr)
+                {
+                    return RedirectToAction("Index", "Reserva", new { Idu = @IdU, dia = @dia, mes = @mes, año = @año, lab = @lab });
+                }
                 model.IdReserva = oReserva.IdReserva;
                 model.IdLab = oReserva.IdLab;
                 model.IdModulo = oReserva.IdModulo;
@@ -192,10 +202,16 @@ namespace Reservas.Controllers
             ViewData["año"] = fecha.Year;
             ViewData["xy"] = xy;
             ViewData["IdU"] = IdU;
+            
             EditarReservaViewModel model = new EditarReservaViewModel();
+            
             using (var db = new DbReservasContext())
             {
                 var oReserva = db.TbReservas.Find(IdReserva);
+                if (IdU != 1 && IdU != oReserva.IdUsr)
+                {
+                    return RedirectToAction("Index", "Reserva", new { Idu = @IdU, dia = @dia, mes = @mes, año = @año, lab = @lab });
+                }
                 _context.TbReservas.Remove(oReserva);
                 await _context.SaveChangesAsync();
             }

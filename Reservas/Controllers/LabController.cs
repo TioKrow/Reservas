@@ -51,7 +51,7 @@ namespace Reservas.Controllers
 
             return RedirectToAction("Index", "Lab", new { IdU = @IdU });
         }
-        public async Task<IActionResult> ModificarLab(int IdLab,int IdU)
+        public IActionResult ModificarLab(int IdLab,int IdU)
         {
             ViewData["IdU"] = IdU;
             EditarLabViewModel model = new EditarLabViewModel();
